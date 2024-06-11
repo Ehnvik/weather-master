@@ -1,0 +1,18 @@
+@use "../../styles/index" as c;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: c.$primaryFont;
+  background-color: c.$primaryColor;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.layout {
+  background-color: red;
+  height: 100%;
+}
