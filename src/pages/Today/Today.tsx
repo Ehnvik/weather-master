@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Layout } from "../../components/Layout/Layout";
 import { fetchWeatherData } from "../../services/weatherService";
 
 export const Today = () => {
@@ -9,14 +8,12 @@ export const Today = () => {
       console.log(response.daily[0]);
     };
 
-    fetchData();
+    // fetchData();
   }, []);
 
   return (
-    <Layout>
-      <div>
-        <h1>Todays Weather</h1>
-      </div>
-    </Layout>
+    <div>
+      <h1>Todays Weather</h1>
+    </div>
   );
 };

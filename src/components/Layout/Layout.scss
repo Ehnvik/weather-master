@@ -1,18 +1,36 @@
-@use "../../styles/index" as c;
+@use "../../styles/index" as s;
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: c.$primaryFont;
-  background-color: c.$primaryColor;
+  font-family: s.$primaryFont;
+  background-color: s.$primaryColor;
+  background-image: s.$primaryBgColor;
 }
 
 * {
   box-sizing: border-box;
 }
 
-.layout {
-  background-color: red;
+#root {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout {
+  height: 100%;
+  width: 100%;
+  max-width: 1240px;
+  color: s.$primaryColor;
+  background-image: s.$primaryBgColor;
+  // background-image: linear-gradient(to right, #141e30, #243b55); // Dark Theme background color
+
+  @include s.large {
+    box-shadow: 1px 0px 20px rgba(151, 149, 149, 0.8),
+      0px 10px 5px rgba(151, 149, 149, 0.1);
+  }
 }
