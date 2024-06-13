@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useRef } from "react";
+import { Link, NavLink } from "react-router-dom";
 import "./Navbar.scss";
 import logo from "../../assets/weather-logo.png";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLUListElement>(null);
-  const [menuHeight, setMenuHeight] = useState("0px");
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -16,27 +15,21 @@ export const Navbar = () => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    if (menuRef.current) {
-      setMenuHeight(isOpen ? `${menuRef.current.scrollHeight}px` : "0px");
-    }
-  }, [isOpen]);
-
   return (
     <nav className="navbar">
       <div className="navbar__container">
-        <img src={logo} alt="Weather Master Logo" />
-        <button
-          className={`navbar__toggle ${isOpen ? "navbar__toggle--open" : ""}`}
-          onClick={toggleMenu}>
+        <Link to={"/"}>
+          <img src={logo} alt="Weather Master Logo" />
+        </Link>
+
+        <button className="navbar__toggle" onClick={toggleMenu}>
           ☰
         </button>
       </div>
 
       <ul
         className={`navbar__list ${isOpen ? "navbar__list--open" : ""}`}
-        ref={menuRef}
-        style={{ height: menuHeight, opacity: isOpen ? 1 : 0 }}>
+        ref={menuRef}>
         <li className="navbar__link">
           <NavLink to="/" onClick={handleClick}>
             Today
