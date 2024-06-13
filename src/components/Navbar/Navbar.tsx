@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.scss";
+import logo from "../../assets/weather-logo.png";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,11 +24,15 @@ export const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <button
-        className={`navbar__toggle ${isOpen ? "navbar__toggle--open" : ""}`}
-        onClick={toggleMenu}>
-        ☰
-      </button>
+      <div className="navbar__container">
+        <img src={logo} alt="Weather Master Logo" />
+        <button
+          className={`navbar__toggle ${isOpen ? "navbar__toggle--open" : ""}`}
+          onClick={toggleMenu}>
+          ☰
+        </button>
+      </div>
+
       <ul
         className={`navbar__list ${isOpen ? "navbar__list--open" : ""}`}
         ref={menuRef}
