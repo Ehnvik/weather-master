@@ -1,0 +1,108 @@
+@use "../../styles/index" as s;
+
+.weather {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__info {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 15px;
+
+    &__icon {
+      max-width: 180px;
+      max-height: 180px;
+    }
+
+    &__temp {
+      font-size: 74px;
+      margin: 15px 0 0 0;
+
+      &--celsius {
+        font-size: 54px;
+      }
+    }
+
+    &__high-low-temp {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 400;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    &__location {
+      font-size: 38px;
+      font-weight: 400;
+      margin-top: 25px;
+    }
+  }
+
+  &__extra-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 50px;
+    padding-bottom: 25px;
+
+    &__humidity {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 5px;
+
+      &__icon {
+        max-width: 40px;
+        max-height: 40px;
+        color: s.$primaryColor;
+      }
+
+      &__level {
+        &--unit {
+          margin: 0;
+          font-size: 28px;
+        }
+        &--text {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+    }
+
+    &__wind {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 5px;
+
+      &__icon {
+        max-width: 40px;
+        max-height: 40px;
+        color: s.$primaryColor;
+      }
+
+      &__speed {
+        &--unit {
+          margin: 0;
+          font-size: 28px;
+        }
+        &--text {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
