@@ -9,7 +9,7 @@ export const fetchWeatherData = async (
 ): Promise<IWeatherResponse> => {
   try {
     let response = await axios.get<IWeatherResponse>(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`,
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`,
     );
     return response.data;
   } catch (error) {
