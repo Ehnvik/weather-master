@@ -1,7 +1,15 @@
-export const TodayDetails = () => {
+import { ReactNode } from "react";
+import { ICurrentWeather } from "../../models/Weather/ICurrentWeather";
+
+interface ICollapsibleProps {
+  children?: ReactNode;
+  weatherDetails: ICurrentWeather;
+}
+
+export const TodayDetails = (props: ICollapsibleProps) => {
   return (
     <div>
-      <h1>Hello Today Details</h1>
+      <div>{props.weatherDetails.uvi}</div>
     </div>
   );
 };

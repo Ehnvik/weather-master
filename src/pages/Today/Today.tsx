@@ -1,48 +1,20 @@
 import { useEffect, useState } from "react";
-import {
-  fetchWeatherData,
-  fetchWeatherLocation,
-} from "../../services/weatherService";
+import { fetchWeatherLocation } from "../../services/weatherService";
 import { ICurrentWeather } from "../../models/Weather/ICurrentWeather";
 import { images } from "../../modules/images";
-import { IWeatherIcons } from "../../models/Weather/IWeatherIcons";
+import { IWeatherIcon } from "../../models/Weather/IWeatherIcon";
 import "./Today.scss";
 import { IHighLowTemp } from "../../models/Weather/IHighLowTemp";
 import windIcon from "../../assets/wind.png";
 import humidityIcon from "../../assets/humidity.png";
-
-const initialCurrentWeather: ICurrentWeather = {
-  dt: 0,
-  sunrise: 0,
-  sunset: 0,
-  temp: 0,
-  feels_like: 0,
-  pressure: 0,
-  humidity: 0,
-  dew_point: 0,
-  uvi: 0,
-  clouds: 0,
-  visibility: 0,
-  wind_speed: 0,
-  wind_deg: 0,
-  weather: [
-    {
-      id: 0,
-      main: "",
-      description: "",
-      icon: "",
-    },
-  ],
-};
+import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
+import { useWeather } from "../../contexts/WeatherContext";
+import { initialCurrentWeather } from "../../initialValues/weather/initialCurrentWeather";
+import { initialWeatherIcon } from "../../initialValues/weather/initialWeatherIcon";
 
 const initialHighLowTemp = {
   max: 0,
   min: 0,
-};
-
-const initialWeatherIcon: IWeatherIcons = {
-  id: "",
-  src: "",
 };
 
 export const Today = () => {
@@ -50,25 +22,24 @@ export const Today = () => {
     initialCurrentWeather,
   );
   const [weatherIcon, setWeatherIcon] =
-    useState<IWeatherIcons>(initialWeatherIcon);
+    useState<IWeatherIcon>(initialWeatherIcon);
   const [location, setLocation] = useState<string>("");
   const [currentTemp, setCurrentTemp] = useState<number>(0);
   const [highLowTemp, setHighLowTemp] = useState(initialHighLowTemp);
   const [windSpeed, setWindSpeed] = useState(0);
 
-  useEffect(() => {
-    const getCurrentWeather = async () => {
-      const response = await fetchWeatherData(
-        "59.35856063244829",
-        "17.905359111139767",
-      );
-      console.log(response);
-      setCurrentWeather(response.current);
-      formatUnits(response.daily[0].temp, response.current.wind_speed);
-    };
+  const { weatherData } = useWeather();
 
-    getCurrentWeather();
-  }, []);
+  useEffect(() => {
+    setCurrentWeather(weatherData.current);
+    formatUnits(
+      weatherData.daily[0].temp,
+      weatherData.current.wind_speed,
+      weatherData.current.temp,
+    );
+    getWeatherLocation();
+    selectWeatherIcon();
+  }, [weatherData]);
 
   const getWeatherLocation = async () => {
     const response = await fetchWeatherLocation(
@@ -86,9 +57,13 @@ export const Today = () => {
     });
   };
 
-  const formatUnits = (temp: IHighLowTemp, windSpeed: number) => {
-    const currentTemp: number = Math.round(currentWeather.temp);
-    setCurrentTemp(currentTemp);
+  const formatUnits = (
+    temp: IHighLowTemp,
+    windSpeed: number,
+    currentTemp: number,
+  ) => {
+    const currentTempFormated: number = Math.round(currentTemp);
+    setCurrentTemp(currentTempFormated);
 
     const currentWindSpeed = Math.round(windSpeed);
     setWindSpeed(currentWindSpeed);
@@ -104,11 +79,6 @@ export const Today = () => {
       };
     });
   };
-
-  useEffect(() => {
-    getWeatherLocation();
-    selectWeatherIcon();
-  }, [currentWeather]);
 
   return (
     <div className="weather">
@@ -161,6 +131,7 @@ export const Today = () => {
           </div>
         </div>
       </div>
+      <TodayDetails weatherDetails={currentWeather} />
     </div>
   );
 };
