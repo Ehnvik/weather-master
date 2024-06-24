@@ -6,7 +6,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
 
   &__info {
     width: 90%;
@@ -14,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: 25px;
+    margin: 25px 0;
 
     &__icon {
       max-width: 180px;
@@ -106,5 +105,19 @@
         }
       }
     }
+  }
+
+  &__details-button {
+    font-family: s.$primaryFont;
+    font-size: 18px;
+    width: 225px;
+    height: 40px;
+    background-color: s.$secondaryColor;
+    color: s.$primaryColor;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 25px;
   }
 }
