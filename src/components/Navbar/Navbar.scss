@@ -17,55 +17,26 @@
     justify-content: space-between;
     align-items: center;
     padding: 5px;
+  }
 
-    img {
-      height: 25px;
-      width: 180px;
-    }
+  &__logo {
+    height: 28px;
+    width: 180px;
   }
 
   &__toggle {
-    display: none;
-    font-size: 24px;
     background: none;
     border: none;
-    color: s.$primaryColor;
-    cursor: pointer;
-    transition: transform 0.5s ease;
-    top: 0;
-
-    &::before,
-    &::after {
-      content: "";
-      display: block;
-      width: 24px;
-      height: 2px;
-      background-color: s.$primaryColor;
-      transition: transform 0.5s ease, opacity 0.5s ease;
-    }
-
-    &::before {
-      transform: translateY(5px);
-    }
-
-    &::after {
-      transform: translateY(-2px);
-    }
-
-    &.navbar__toggle--open {
-      transform: rotate(45deg);
-
-      &::before {
-        transform: rotate(90deg) translateX(10px);
-      }
-
-      &::after {
-        transform: rotate(90deg) translateX(-10px);
-      }
-    }
   }
 
-  &__list {
+  &__search-icon {
+    width: 30px;
+    height: 30px;
+    color: s.$primaryColor;
+    cursor: pointer;
+  }
+
+  &__search-container {
     list-style: none;
     display: flex;
     gap: 20px;
@@ -74,21 +45,18 @@
     transition: height 0.5s ease, opacity 0.5s ease;
   }
 
-  &__link a {
-    color: s.$primaryColor;
-    font-size: large;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 4px;
+  &__close-icon-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    &.active {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
+  &__close-icon {
+    width: 22px;
+    height: 22px;
+    margin: 5px 5px 0 0;
+    text-align: right;
+    cursor: pointer;
   }
 }
 
@@ -98,12 +66,12 @@
       display: block;
     }
 
-    &__list {
+    &__search-container {
       display: flex;
       flex-direction: column;
       gap: 0;
       position: absolute;
-      top: 50px;
+      top: 0;
       left: 0;
       width: 100%;
       background-image: s.$primaryBgColor;
@@ -114,19 +82,8 @@
       border-radius: 0 0 18px 18px;
 
       &--open {
-        height: 183px;
+        height: 600px;
         opacity: 1;
-      }
-    }
-
-    &__link {
-      width: 100%;
-      text-align: center;
-      padding: 10px 0;
-
-      a {
-        display: block;
-        width: 100%;
       }
     }
   }

@@ -41,7 +41,6 @@ export const Today = () => {
 
     getWeatherLocation();
     selectWeatherIcon();
-    console.log(weatherData);
   }, [weatherData]);
 
   const getWeatherLocation = async () => {
@@ -159,7 +158,7 @@ export const Today = () => {
           </div>
         </div>
       </div>
-      <button
+      {/* <button
         className="weather__details-button"
         onClick={() => setToggleDetails(!toggleDetails)}>
         {!toggleDetails ? "More Details" : "Hide Details"}
@@ -171,7 +170,7 @@ export const Today = () => {
           dewPoint={dewPoint}
           visibility={visibility}
         />
-      ) : null}
+      ) : null} */}
     </div>
   );
 };
