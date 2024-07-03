@@ -33,8 +33,12 @@
   }
 
   &__results-container {
-    width: 80%;
+    margin-top: 25px;
+    padding: 0 25px;
+    width: 100%;
     text-align: center;
+    overflow-y: scroll;
+    height: 500px;
   }
 
   &__result {
@@ -46,7 +50,6 @@
   &__name {
     font-size: 22px;
     margin: 0;
-    margin-bottom: 10px;
   }
 
   &__state {
@@ -54,4 +57,20 @@
     margin: 0;
     font-weight: 300;
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: s.$primaryBgColor;
+}
+
+::-webkit-scrollbar-thumb {
+  background: s.$primaryColor;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: lighten(s.$primaryColor, 8%);
 }

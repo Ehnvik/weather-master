@@ -8,36 +8,45 @@ import {
 import { fetchWeatherData } from "../services/weatherService";
 import { IWeatherResponse } from "../models/Weather/IWeatherResponse";
 import { initialWeatherResponse } from "../initialValues/weather/initialWeatherResponse";
+import { initialLocationCoordinates } from "../initialValues/weather/initialLocationCoordinates";
+import { ILocationCoordinates } from "../models/Weather/ILocationCoordinates";
 
 interface IWeatherContext {
   weatherData: IWeatherResponse;
+  getLocationCoordinates: (coordinates: ILocationCoordinates) => void;
 }
 
 interface IWeatherProviderProps {
   children: ReactNode;
 }
 
-export const WeatherContext = createContext<IWeatherContext | null>(null);
+const WeatherContext = createContext<IWeatherContext | null>(null);
 
 export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   const [weatherData, setWeatherData] = useState<IWeatherResponse>(
     initialWeatherResponse,
   );
+  const [locationCoordinates, setlocationCoordinates] =
+    useState<ILocationCoordinates>(initialLocationCoordinates);
+
+  const getLocationCoordinates = (coordinates: ILocationCoordinates) => {
+    setlocationCoordinates(coordinates);
+  };
 
   useEffect(() => {
     const getWeatherData = async () => {
       const response = await fetchWeatherData(
-        "59.35856063244829",
-        "17.905359111139767",
+        locationCoordinates.lat,
+        locationCoordinates.lon,
       );
 
       setWeatherData(response);
     };
     getWeatherData();
-  }, []);
+  }, [locationCoordinates]);
 
   return (
-    <WeatherContext.Provider value={{ weatherData }}>
+    <WeatherContext.Provider value={{ weatherData, getLocationCoordinates }}>
       {children}
     </WeatherContext.Provider>
   );

@@ -1,5 +1,7 @@
 export interface IGeoLocations {
-  country: string;
-  name: string;
-  state: string;
+  class: string;
+  display_name: string;
+  lat: string;
+  lon: string;
+  place_id: number;
 }

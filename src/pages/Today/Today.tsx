@@ -45,8 +45,8 @@ export const Today = () => {
 
   const getWeatherLocation = async () => {
     const response = await fetchWeatherLocation(
-      "59.35856063244829",
-      "17.905359111139767",
+      weatherData.lat.toString(),
+      weatherData.lon.toString(),
     );
     setLocation(response.name);
   };
