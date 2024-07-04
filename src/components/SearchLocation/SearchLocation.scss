@@ -37,7 +37,7 @@
     padding: 0 25px;
     width: 100%;
     text-align: center;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 500px;
   }
 
@@ -64,13 +64,13 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: s.$primaryBgColor;
-}
-
-::-webkit-scrollbar-thumb {
   background: s.$primaryColor;
 }
 
+::-webkit-scrollbar-thumb {
+  background: s.$primaryBgColor;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: lighten(s.$primaryColor, 8%);
+  background: #94bedc;
 }

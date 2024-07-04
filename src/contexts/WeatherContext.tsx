@@ -8,12 +8,12 @@ import {
 import { fetchWeatherData } from "../services/weatherService";
 import { IWeatherResponse } from "../models/Weather/IWeatherResponse";
 import { initialWeatherResponse } from "../initialValues/weather/initialWeatherResponse";
-import { initialLocationCoordinates } from "../initialValues/weather/initialLocationCoordinates";
-import { ILocationCoordinates } from "../models/Weather/ILocationCoordinates";
+import { LocationDetails } from "../models/Weather/LocationDetails";
+import { initialLocationDetails } from "../initialValues/weather/initialLocationDetails";
 
 interface IWeatherContext {
   weatherData: IWeatherResponse;
-  getLocationCoordinates: (coordinates: ILocationCoordinates) => void;
+  getLocation: (location: LocationDetails) => void;
 }
 
 interface IWeatherProviderProps {
@@ -26,27 +26,24 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   const [weatherData, setWeatherData] = useState<IWeatherResponse>(
     initialWeatherResponse,
   );
-  const [locationCoordinates, setlocationCoordinates] =
-    useState<ILocationCoordinates>(initialLocationCoordinates);
-
-  const getLocationCoordinates = (coordinates: ILocationCoordinates) => {
-    setlocationCoordinates(coordinates);
+  const [location, setLocation] = useState<LocationDetails>(
+    initialLocationDetails,
+  );
+  const getLocation = (location: LocationDetails) => {
+    setLocation(location);
   };
 
   useEffect(() => {
     const getWeatherData = async () => {
-      const response = await fetchWeatherData(
-        locationCoordinates.lat,
-        locationCoordinates.lon,
-      );
+      const response = await fetchWeatherData(location.lat, location.lon);
 
       setWeatherData(response);
     };
     getWeatherData();
-  }, [locationCoordinates]);
+  }, [location]);
 
   return (
-    <WeatherContext.Provider value={{ weatherData, getLocationCoordinates }}>
+    <WeatherContext.Provider value={{ weatherData, getLocation }}>
       {children}
     </WeatherContext.Provider>
   );

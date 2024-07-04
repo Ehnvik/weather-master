@@ -14,7 +14,6 @@ export const fetchWeatherData = async (
     let response = await axios.get<IWeatherResponse>(
       `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${weatherApiKey}`,
     );
-    console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -58,7 +57,6 @@ export const getGeoLocationByName = async (
     let response = await axios.get<IGeoLocations[]>(
       `https://geocode.maps.co/search?city=${searchValue}&api_key=${geoCodingApiKey}`,
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fething weather location", error);
