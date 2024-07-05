@@ -9,15 +9,31 @@ export const createLocationDetailsList = (
       location.class === "place" || location.class === "boundary",
   );
 
-  return filteredLocations.map((location) => {
+  const uniqueLocations = new Set();
+  const locationDetailsList: LocationDetails[] = [];
+
+  filteredLocations.forEach((location) => {
     const parts = location.display_name.split(", ");
-    return new LocationDetails(
-      location.place_id,
-      location.lat,
-      location.lon,
-      parts[0] || "",
-      parts[parts.length - 1] || "",
-      parts.length > 2 ? parts[1] : "",
-    );
+    const city = parts[0] || "";
+    const country = parts[parts.length - 1] || "";
+    const region = parts.length > 2 ? parts[1] : "";
+
+    const uniqueKey = `${city}-${region}-${country}`;
+
+    if (!uniqueLocations.has(uniqueKey)) {
+      uniqueLocations.add(uniqueKey);
+      locationDetailsList.push(
+        new LocationDetails(
+          location.place_id,
+          location.lat,
+          location.lon,
+          city,
+          country,
+          region,
+        ),
+      );
+    }
   });
+
+  return locationDetailsList;
 };

@@ -40,23 +40,6 @@
     overflow-y: auto;
     height: 500px;
   }
-
-  &__result {
-    padding: 25px 0;
-    color: s.$primaryColor;
-    border-bottom: 1px solid #fafafa;
-  }
-
-  &__name {
-    font-size: 22px;
-    margin: 0;
-  }
-
-  &__state {
-    font-size: 18px;
-    margin: 0;
-    font-weight: 300;
-  }
 }
 
 ::-webkit-scrollbar {

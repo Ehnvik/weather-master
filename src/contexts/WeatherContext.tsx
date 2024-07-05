@@ -14,6 +14,7 @@ import { initialLocationDetails } from "../initialValues/weather/initialLocation
 interface IWeatherContext {
   weatherData: IWeatherResponse;
   getLocation: (location: LocationDetails) => void;
+  location: LocationDetails;
 }
 
 interface IWeatherProviderProps {
@@ -29,6 +30,7 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   const [location, setLocation] = useState<LocationDetails>(
     initialLocationDetails,
   );
+
   const getLocation = (location: LocationDetails) => {
     setLocation(location);
   };
@@ -43,7 +45,7 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   }, [location]);
 
   return (
-    <WeatherContext.Provider value={{ weatherData, getLocation }}>
+    <WeatherContext.Provider value={{ weatherData, getLocation, location }}>
       {children}
     </WeatherContext.Provider>
   );

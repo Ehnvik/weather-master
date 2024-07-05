@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetchWeatherLocation } from "../../services/weatherService";
 import { images } from "../../modules/images";
 import { IWeatherIcon } from "../../models/Weather/IWeatherIcon";
 import "./Today.scss";
@@ -18,7 +17,6 @@ const initialHighLowTemp = {
 export const Today = () => {
   const [weatherIcon, setWeatherIcon] =
     useState<IWeatherIcon>(initialWeatherIcon);
-  const [location, setLocation] = useState<string>("");
   const [currentTemp, setCurrentTemp] = useState<number>(0);
   const [highLowTemp, setHighLowTemp] = useState(initialHighLowTemp);
   const [windSpeed, setWindSpeed] = useState(0);
@@ -27,7 +25,7 @@ export const Today = () => {
   const [dewPoint, setDewPoint] = useState<number>(0);
   const [visibility, setVisibility] = useState(0);
 
-  const { weatherData } = useWeather();
+  const { weatherData, location } = useWeather();
 
   useEffect(() => {
     formatUnits(
@@ -39,17 +37,8 @@ export const Today = () => {
       weatherData.current.visibility,
     );
 
-    getWeatherLocation();
     selectWeatherIcon();
   }, [weatherData]);
-
-  const getWeatherLocation = async () => {
-    const response = await fetchWeatherLocation(
-      weatherData.lat.toString(),
-      weatherData.lon.toString(),
-    );
-    setLocation(response.name);
-  };
 
   const selectWeatherIcon = () => {
     images.forEach((image) => {
@@ -92,7 +81,7 @@ export const Today = () => {
     const dewPointFormatted: number = roundToNearestHalf(dewPoint);
     setDewPoint(dewPointFormatted);
 
-    const visibilityFormatted: number = roundToNearestHalf(visibility / 1000); // Convert to kilometers and round
+    const visibilityFormatted: number = roundToNearestHalf(visibility / 1000);
     setVisibility(visibilityFormatted);
 
     const max: number = roundToNearestHalf(temp.max);
@@ -123,7 +112,13 @@ export const Today = () => {
           <p>H:{highLowTemp.max}&deg;</p>
           <p>L:{highLowTemp.min}&deg;</p>
         </div>
-        <h1 className="weather__info__location">{location}</h1>
+        <h1 className="weather__city">{location.city}</h1>
+        <div className="weather__details">
+          {location.region && (
+            <p className="weather__region">{location.region}</p>
+          )}
+          <p className="weather__country">{location.country}</p>
+        </div>
         <div className="weather__extra-info">
           <div className="weather__extra-info__humidity">
             <img
@@ -158,7 +153,7 @@ export const Today = () => {
           </div>
         </div>
       </div>
-      {/* <button
+      <button
         className="weather__details-button"
         onClick={() => setToggleDetails(!toggleDetails)}>
         {!toggleDetails ? "More Details" : "Hide Details"}
@@ -170,7 +165,7 @@ export const Today = () => {
           dewPoint={dewPoint}
           visibility={visibility}
         />
-      ) : null} */}
+      ) : null}
     </div>
   );
 };

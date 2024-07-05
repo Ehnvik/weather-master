@@ -7,6 +7,36 @@
   align-items: center;
   justify-content: flex-start;
 
+  &__city {
+    font-size: 38px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 25px;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 10px;
+    margin-bottom: 25px;
+  }
+
+  &__region {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 300;
+    margin-right: 5px;
+    padding-right: 5px;
+    border-right: 1px solid s.$primaryColor;
+  }
+
+  &__country {
+    font-size: 18px;
+    margin: 0;
+    font-weight: 300;
+  }
+
   &__info {
     width: 90%;
     display: flex;
@@ -39,12 +69,6 @@
       p {
         margin: 0;
       }
-    }
-
-    &__location {
-      font-size: 38px;
-      font-weight: 400;
-      margin-top: 25px;
     }
   }
 

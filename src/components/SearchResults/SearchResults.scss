@@ -1,0 +1,35 @@
+@use "../../styles/index" as s;
+
+.location {
+  padding: 25px 0;
+  color: s.$primaryColor;
+  border-bottom: 1px solid #fafafa;
+  cursor: pointer;
+
+  &__city {
+    font-size: 22px;
+    margin: 0;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  &__region {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 300;
+    margin-right: 5px;
+    padding-right: 5px;
+    border-right: 1px solid s.$primaryColor;
+  }
+
+  &__country {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 300;
+  }
+}
