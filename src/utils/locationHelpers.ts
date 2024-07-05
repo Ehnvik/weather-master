@@ -1,5 +1,5 @@
-import { IGeoLocations } from "../models/Weather/IGeoLocations";
-import { LocationDetails } from "../models/Weather/LocationDetails";
+import { IGeoLocations } from "../models/Location/IGeoLocations";
+import { LocationDetails } from "../models/Location/LocationDetails";
 
 export const createLocationDetailsList = (
   locations: IGeoLocations[],

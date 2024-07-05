@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { getGeoLocationByName } from "../services/weatherService";
-import { LocationDetails } from "../models/Weather/LocationDetails";
+import { LocationDetails } from "../models/Location/LocationDetails";
 import { createLocationDetailsList } from "../utils/locationHelpers";
 
 interface ILocationContext {

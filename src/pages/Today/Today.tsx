@@ -8,11 +8,7 @@ import humidityIcon from "../../assets/humidity.png";
 import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
 import { useWeather } from "../../contexts/WeatherContext";
 import { initialWeatherIcon } from "../../initialValues/weather/initialWeatherIcon";
-
-const initialHighLowTemp = {
-  max: 0,
-  min: 0,
-};
+import { initialHighLowTemp } from "../../initialValues/weather/initialHighLowTemp";
 
 export const Today = () => {
   const [weatherIcon, setWeatherIcon] =
