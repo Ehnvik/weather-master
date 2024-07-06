@@ -1,17 +1,16 @@
 import axios from "axios";
-import { IGeoLocations } from "../models/Location/IGeoLocations";
+import { ILocationsResponse } from "../models/Location/Interfaces/ILocationsResponse";
+import { IGeolocationResponse } from "../models/Location/Interfaces/IGeolocationResponse";
 
 const geoCodingApiKey = import.meta.env.VITE_GEOCODING_API_KEY;
 
-export const getGeoLocationByName = async (
+export const fetchLocationsByName = async (
   searchValue: string,
-): Promise<IGeoLocations[]> => {
+): Promise<ILocationsResponse[]> => {
   try {
-    let response = await axios.get<IGeoLocations[]>(
+    let response = await axios.get<ILocationsResponse[]>(
       `https://geocode.maps.co/search?city=${searchValue}&api_key=${geoCodingApiKey}`,
     );
-    console.log(response.data);
-
     return response.data;
   } catch (error) {
     console.error("Error fething weather location", error);
@@ -19,16 +18,14 @@ export const getGeoLocationByName = async (
   }
 };
 
-export const getGeoLocationByCoordinates = async (
+export const fetchLocationByCoordinates = async (
   lat: string,
   lon: string,
-): Promise<IGeoLocations[]> => {
+): Promise<IGeolocationResponse> => {
   try {
-    let response = await axios.get<IGeoLocations[]>(
+    let response = await axios.get<IGeolocationResponse>(
       `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}&api_key=${geoCodingApiKey}`,
     );
-    console.log(response.data);
-
     return response.data;
   } catch (error) {
     console.error("Error fething weather location", error);

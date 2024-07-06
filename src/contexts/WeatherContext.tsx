@@ -8,12 +8,8 @@ import {
 import { fetchWeatherData } from "../services/weatherService";
 import { IWeatherResponse } from "../models/Weather/IWeatherResponse";
 import { initialWeatherResponse } from "../initialValues/weather/initialWeatherResponse";
-import { LocationDetails } from "../models/Location/LocationDetails";
+import { LocationDetails } from "../models/Location/Classes/LocationDetails";
 import { initialLocationDetails } from "../initialValues/location/initialLocationDetails";
-import { useGeolocation } from "../hooks/useGeolocation";
-import { initialCurrentLocation } from "../initialValues/location/initialCurrentLocation";
-import { ILocationCoordinates } from "../models/Location/ILocationCoordinates";
-import { LocationCoordinates } from "../models/Location/LocationCoordinates";
 
 interface IWeatherContext {
   weatherData: IWeatherResponse;
@@ -35,34 +31,17 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
     initialLocationDetails,
   );
 
-  const [locationCoordinates, setLocationCoordinates] =
-    useState<ILocationCoordinates>(initialCurrentLocation);
-
-  const { currentGeolocation } = useGeolocation();
-
-  useEffect(() => {
-    if (currentGeolocation) {
-      setLocationCoordinates(currentGeolocation);
-    }
-  }, []);
-
   const getLocation = (location: LocationDetails) => {
-    setLocationCoordinates(new LocationCoordinates(location.lat, location.lon));
     setLocation(location);
   };
 
   useEffect(() => {
     const getWeatherData = async () => {
-      const response = await fetchWeatherData(
-        locationCoordinates.lat,
-        locationCoordinates.lon,
-      );
-      console.log(response);
-
+      const response = await fetchWeatherData(location.lat, location.lon);
       setWeatherData(response);
     };
     getWeatherData();
-  }, [location, locationCoordinates]);
+  }, [location]);
 
   return (
     <WeatherContext.Provider value={{ weatherData, getLocation, location }}>

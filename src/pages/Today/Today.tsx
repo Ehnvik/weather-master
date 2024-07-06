@@ -9,6 +9,8 @@ import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
 import { useWeather } from "../../contexts/WeatherContext";
 import { initialWeatherIcon } from "../../initialValues/weather/initialWeatherIcon";
 import { initialHighLowTemp } from "../../initialValues/weather/initialHighLowTemp";
+import { useLocation } from "../../contexts/LocationContext";
+import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 
 export const Today = () => {
   const [weatherIcon, setWeatherIcon] =
@@ -21,7 +23,14 @@ export const Today = () => {
   const [dewPoint, setDewPoint] = useState<number>(0);
   const [visibility, setVisibility] = useState(0);
 
-  const { weatherData, location } = useWeather();
+  const { weatherData, location, getLocation } = useWeather();
+  const { currentLocation: currentPosition } = useLocation();
+
+  const { geolocation } = useCurrentLocation(currentPosition);
+
+  useEffect(() => {
+    getLocation(geolocation);
+  }, [currentPosition]);
 
   useEffect(() => {
     formatUnits(

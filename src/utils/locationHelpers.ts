@@ -1,5 +1,5 @@
-import { IGeoLocations } from "../models/Location/IGeoLocations";
-import { LocationDetails } from "../models/Location/LocationDetails";
+import { IGeoLocations } from "../models/Location/Interfaces/ILocationsResponse";
+import { LocationDetails } from "../models/Location/Classes/LocationDetails";
 
 export const createLocationDetailsList = (
   locations: IGeoLocations[],

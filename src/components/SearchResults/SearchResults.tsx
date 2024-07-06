@@ -1,4 +1,4 @@
-import { LocationDetails } from "../../models/Location/LocationDetails";
+import { LocationDetails } from "../../models/Location/Classes/LocationDetails";
 import { useWeather } from "../../contexts/WeatherContext";
 import "./SearchResults.scss";
 import { useNavbarContext } from "../../contexts/NavbarContext";

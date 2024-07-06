@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ILocationCoordinates } from "../models/Location/ILocationCoordinates";
-import { LocationCoordinates } from "../models/Location/LocationCoordinates";
+import { ILocationCoordinates } from "../models/Location/Interfaces/ILocationCoordinates";
+import { LocationCoordinates } from "../models/Location/Classes/LocationCoordinates";
 
 export const useGeolocation = () => {
   const [currentGeolocation, setCurrentGeolocation] =
@@ -24,8 +24,6 @@ export const useGeolocation = () => {
   };
 
   const success = (position: GeolocationPosition) => {
-    console.log("Great Success!");
-
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
     setCurrentGeolocation(createLocationObject(lat, lon));

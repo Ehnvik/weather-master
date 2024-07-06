@@ -1,6 +1,6 @@
 import "./SearchLocation.scss";
 import { FontAwesomeIcon } from "../../modules/iconLibrary";
-import { LocationDetails } from "../../models/Location/LocationDetails";
+import { LocationDetails } from "../../models/Location/Classes/LocationDetails";
 import { useLocation } from "../../contexts/LocationContext";
 import { SearchResults } from "../SearchResults/SearchResults";
 

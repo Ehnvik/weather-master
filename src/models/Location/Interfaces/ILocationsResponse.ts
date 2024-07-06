@@ -1,4 +1,4 @@
-export interface IGeoLocations {
+export interface ILocationsResponse {
   class: string;
   display_name: string;
   lat: string;
