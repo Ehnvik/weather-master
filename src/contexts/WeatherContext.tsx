@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { fetchWeatherData } from "../services/weatherService";
-import { IWeatherResponse } from "../models/Weather/IWeatherResponse";
+import { IWeatherResponse } from "../models/Weather/Interfaces/IWeatherResponse";
 import { initialWeatherResponse } from "../initialValues/weather/initialWeatherResponse";
 import { LocationDetails } from "../models/Location/Classes/LocationDetails";
 import { initialLocationDetails } from "../initialValues/location/initialLocationDetails";
@@ -37,8 +37,10 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
 
   useEffect(() => {
     const getWeatherData = async () => {
-      const response = await fetchWeatherData(location.lat, location.lon);
-      setWeatherData(response);
+      if (location.lat !== "" && location.lon !== "") {
+        const response = await fetchWeatherData(location.lat, location.lon);
+        setWeatherData(response);
+      }
     };
     getWeatherData();
   }, [location]);

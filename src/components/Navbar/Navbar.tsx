@@ -11,6 +11,8 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { setSearchValue } = useLocation();
 
+  const { requestGeolocation } = useLocation();
+
   const toggleSearchContainer = () => {
     setSearchValue("");
     setIsOpen(!isOpen);
@@ -19,7 +21,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar__container">
-        <Link to={"/"}>
+        <Link onClick={requestGeolocation} to={"/"}>
           <img className="navbar__logo" src={logo} alt="Weather Master Logo" />
         </Link>
 

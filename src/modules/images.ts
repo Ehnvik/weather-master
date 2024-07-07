@@ -16,7 +16,7 @@ import image15 from "../assets/13d.png";
 import image16 from "../assets/13n.png";
 import image17 from "../assets/50d.png";
 import image18 from "../assets/50n.png";
-import { IWeatherIcon } from "../models/Weather/IWeatherIcon";
+import { IWeatherIcon } from "../models/Weather/Interfaces/IWeatherIcon";
 
 export const images: IWeatherIcon[] = [
   { id: "01d", src: image1 },

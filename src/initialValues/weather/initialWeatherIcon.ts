@@ -1,4 +1,4 @@
-import { IWeatherIcon } from "../../models/Weather/IWeatherIcon";
+import { IWeatherIcon } from "../../models/Weather/Interfaces/IWeatherIcon";
 
 export const initialWeatherIcon: IWeatherIcon = {
   id: "",

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IWeatherResponse } from "../models/Weather/IWeatherResponse";
+import { IWeatherResponse } from "../models/Weather/Interfaces/IWeatherResponse";
 
 const weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
 

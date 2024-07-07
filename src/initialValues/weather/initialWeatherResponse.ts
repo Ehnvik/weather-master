@@ -1,4 +1,4 @@
-import { IWeatherResponse } from "../../models/Weather/IWeatherResponse";
+import { IWeatherResponse } from "../../models/Weather/Interfaces/IWeatherResponse";
 import { initialCurrentWeather } from "./initialCurrentWeather";
 import { initialDailyWeather } from "./initialDailyWeather";
 import { initialHourlyWeather } from "./initialHourlyWeather";

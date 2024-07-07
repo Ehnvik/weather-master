@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ILocationCoordinates } from "../models/Location/Interfaces/ILocationCoordinates";
 import { LocationCoordinates } from "../models/Location/Classes/LocationCoordinates";
 
@@ -37,5 +37,14 @@ export const useGeolocation = () => {
     setLocationError("Unable to retrieve your location");
   };
 
-  return { currentGeolocation, locationError };
+  const requestGeolocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setLocationError("Geolocation is not supported by your browser");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(success, handleError);
+  }, []);
+
+  return { currentGeolocation, locationError, requestGeolocation };
 };

@@ -1,103 +1,47 @@
 import { useEffect, useState } from "react";
 import { images } from "../../modules/images";
-import { IWeatherIcon } from "../../models/Weather/IWeatherIcon";
+import { IWeatherIcon } from "../../models/Weather/Interfaces/IWeatherIcon";
 import "./Today.scss";
-import { IHighLowTemp } from "../../models/Weather/IHighLowTemp";
 import windIcon from "../../assets/wind.png";
 import humidityIcon from "../../assets/humidity.png";
 import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
 import { useWeather } from "../../contexts/WeatherContext";
 import { initialWeatherIcon } from "../../initialValues/weather/initialWeatherIcon";
-import { initialHighLowTemp } from "../../initialValues/weather/initialHighLowTemp";
 import { useLocation } from "../../contexts/LocationContext";
 import { useCurrentLocation } from "../../hooks/useCurrentLocation";
+import { useFormatUnits } from "../../hooks/useFormatUnits";
+import { FormattedWeatherUnits } from "../../models/Weather/Classes/FormattedWeatherUnits";
+import { initialWeatherUnits } from "../../initialValues/weather/initialWeatherUnits";
 
 export const Today = () => {
   const [weatherIcon, setWeatherIcon] =
     useState<IWeatherIcon>(initialWeatherIcon);
-  const [currentTemp, setCurrentTemp] = useState<number>(0);
-  const [highLowTemp, setHighLowTemp] = useState(initialHighLowTemp);
-  const [windSpeed, setWindSpeed] = useState(0);
   const [toggleDetails, setToggleDetails] = useState<boolean>(false);
-  const [feelsLike, setFeelsLike] = useState<number>(0);
-  const [dewPoint, setDewPoint] = useState<number>(0);
-  const [visibility, setVisibility] = useState(0);
+  const [weatherUnits, setWeatherUnits] =
+    useState<FormattedWeatherUnits>(initialWeatherUnits);
 
   const { weatherData, location, getLocation } = useWeather();
   const { currentLocation: currentPosition } = useLocation();
 
   const { geolocation } = useCurrentLocation(currentPosition);
+  const { formattedUnits } = useFormatUnits(weatherData);
 
   useEffect(() => {
     getLocation(geolocation);
-  }, [currentPosition]);
+  }, [geolocation]);
 
   useEffect(() => {
-    formatUnits(
-      weatherData.daily[0].temp,
-      weatherData.current.wind_speed,
-      weatherData.current.temp,
-      weatherData.current.feels_like,
-      weatherData.current.dew_point,
-      weatherData.current.visibility,
-    );
-
+    if (formattedUnits) {
+      setWeatherUnits(formattedUnits);
+    }
     selectWeatherIcon();
-  }, [weatherData]);
+  }, [formattedUnits]);
 
   const selectWeatherIcon = () => {
     images.forEach((image) => {
       if (image.id === weatherData.current.weather[0].icon) {
         setWeatherIcon(image);
       }
-    });
-  };
-
-  const roundToNearestHalf = (num: number) => {
-    const intPart = Math.floor(num);
-    const decimalPart = num - intPart;
-
-    if (decimalPart < 0.25) {
-      return intPart;
-    } else if (decimalPart < 0.75) {
-      return intPart + 0.5;
-    } else {
-      return intPart + 1;
-    }
-  };
-
-  const formatUnits = (
-    temp: IHighLowTemp,
-    windSpeed: number,
-    currentTemp: number,
-    feelsLike: number,
-    dewPoint: number,
-    visibility: number,
-  ) => {
-    const currentTempFormatted: number = roundToNearestHalf(currentTemp);
-    setCurrentTemp(currentTempFormatted);
-
-    const currentWindSpeed = roundToNearestHalf(windSpeed);
-    setWindSpeed(currentWindSpeed);
-
-    const feelsLikeFormatted: number = roundToNearestHalf(feelsLike);
-    setFeelsLike(feelsLikeFormatted);
-
-    const dewPointFormatted: number = roundToNearestHalf(dewPoint);
-    setDewPoint(dewPointFormatted);
-
-    const visibilityFormatted: number = roundToNearestHalf(visibility / 1000);
-    setVisibility(visibilityFormatted);
-
-    const max: number = roundToNearestHalf(temp.max);
-    const min: number = roundToNearestHalf(temp.min);
-
-    setHighLowTemp((prevState) => {
-      return {
-        ...prevState,
-        max: max,
-        min: min,
-      };
     });
   };
 
@@ -110,12 +54,12 @@ export const Today = () => {
           alt="Weather Icon"
         />
         <h2 className="weather__info__temp">
-          {currentTemp}&deg;
+          {weatherUnits.currentTemp}&deg;
           <span className="weather__info__temp--celsius">C</span>
         </h2>
         <div className="weather__info__high-low-temp">
-          <p>H:{highLowTemp.max}&deg;</p>
-          <p>L:{highLowTemp.min}&deg;</p>
+          <p>H:{weatherUnits.maxTemp}&deg;</p>
+          <p>L:{weatherUnits.minTemp}&deg;</p>
         </div>
         <h1 className="weather__city">{location.city}</h1>
         <div className="weather__details">
@@ -149,7 +93,7 @@ export const Today = () => {
             />
             <div className="weather__extra-info__wind__speed">
               <p className="weather__extra-info__wind__speed--unit">
-                {windSpeed}m/s
+                {weatherUnits.windSpeed}m/s
               </p>
               <p className="weather__extra-info__wind__speed--text">
                 Wind Speed
@@ -166,9 +110,7 @@ export const Today = () => {
       {toggleDetails ? (
         <TodayDetails
           weatherDetails={weatherData}
-          feelsLike={feelsLike}
-          dewPoint={dewPoint}
-          visibility={visibility}
+          weatherUnits={weatherUnits}
         />
       ) : null}
     </div>

@@ -1,4 +1,4 @@
-import { ICurrentWeather } from "../../models/Weather/ICurrentWeather";
+import { ICurrentWeather } from "../../models/Weather/Interfaces/ICurrentWeather";
 
 export const initialCurrentWeather: ICurrentWeather = {
   dt: 0,

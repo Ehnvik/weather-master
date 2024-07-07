@@ -1,4 +1,4 @@
-import { IWeatherResponse } from "../../models/Weather/IWeatherResponse";
+import { IWeatherResponse } from "../../models/Weather/Interfaces/IWeatherResponse";
 import wind from "../../assets/wind-degrees.png";
 import uv from "../../assets/uv.png";
 import feelsLikeIcon from "../../assets/temperature-feels-like.png";
@@ -6,19 +6,16 @@ import dewPointIcon from "../../assets/dew-point.png";
 import clouds from "../../assets/clouds-percentage.png";
 import visibilityIcon from "../../assets/visibility.png";
 import "./TodayDetails.scss";
+import { FormattedWeatherUnits } from "../../models/Weather/Classes/FormattedWeatherUnits";
 
 interface ICollapsibleProps {
   weatherDetails: IWeatherResponse;
-  feelsLike: number;
-  dewPoint: number;
-  visibility: number;
+  weatherUnits: FormattedWeatherUnits;
 }
 
 export const TodayDetails = ({
   weatherDetails,
-  feelsLike,
-  dewPoint,
-  visibility,
+  weatherUnits,
 }: ICollapsibleProps) => {
   return (
     <div className="details">
@@ -55,7 +52,7 @@ export const TodayDetails = ({
             <img className="details__icon" src={dewPointIcon} alt="UV Icon" />
             <div className="details__level">
               <p className="details__unit">
-                {dewPoint}&deg;<span>C</span>
+                {weatherUnits.dewPoint}&deg;<span>C</span>
               </p>
               <p className="details__text">Dew Point</p>
             </div>
@@ -84,7 +81,7 @@ export const TodayDetails = ({
             />
             <div className="details__level details__level">
               <p className="details__unit">
-                {feelsLike}&deg;<span>C</span>
+                {weatherUnits.feelsLike}&deg;<span>C</span>
               </p>
               <p className="details__text">Feels Like</p>
             </div>
@@ -96,7 +93,7 @@ export const TodayDetails = ({
               alt="Feels Like Icon"
             />
             <div className="details__level details__level">
-              <p className="details__unit">{visibility} km</p>
+              <p className="details__unit">{weatherUnits.visibility} km</p>
               <p className="details__text">Visibility</p>
             </div>
           </div>

@@ -14,7 +14,6 @@ import {
 import { useGeolocation } from "../hooks/useGeolocation";
 import { ILocationCoordinates } from "../models/Location/Interfaces/ILocationCoordinates";
 import { IGeolocationResponse } from "../models/Location/Interfaces/IGeolocationResponse";
-import { initialLocationCoordinates } from "../initialValues/location/initialLocationCoordinates";
 import { initialGeolocation } from "../initialValues/location/initialGeolocation";
 
 interface ILocationContext {
@@ -22,6 +21,7 @@ interface ILocationContext {
   setSearchValue: (searchValue: string) => void;
   searchValue: string;
   currentLocation: IGeolocationResponse;
+  requestGeolocation: () => void;
 }
 
 interface ILocationProviderProps {
@@ -34,13 +34,13 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [locations, setLocations] = useState<LocationDetails[]>([]);
   const [debouncedValue, setDebouncedValue] = useState<string>("");
-  const [coordinates, setCoordinates] = useState<ILocationCoordinates>(
-    initialLocationCoordinates,
+  const [coordinates, setCoordinates] = useState<ILocationCoordinates | null>(
+    null,
   );
   const [currentLocation, setCurrentLocation] =
     useState<IGeolocationResponse>(initialGeolocation);
 
-  const { currentGeolocation } = useGeolocation();
+  const { currentGeolocation, requestGeolocation } = useGeolocation();
 
   useEffect(() => {
     if (currentGeolocation) {
@@ -50,11 +50,13 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
 
   useEffect(() => {
     const getGeolocationData = async () => {
-      const response = await fetchLocationByCoordinates(
-        coordinates.lat,
-        coordinates.lon,
-      );
-      setCurrentLocation(response);
+      if (coordinates && coordinates.lat && coordinates.lon) {
+        const response = await fetchLocationByCoordinates(
+          coordinates.lat,
+          coordinates.lon,
+        );
+        setCurrentLocation(response);
+      }
     };
 
     getGeolocationData();
@@ -83,7 +85,13 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   }, [debouncedValue]);
   return (
     <LocationsContext.Provider
-      value={{ locations, setSearchValue, searchValue, currentLocation }}>
+      value={{
+        locations,
+        setSearchValue,
+        searchValue,
+        currentLocation,
+        requestGeolocation,
+      }}>
       {children}
     </LocationsContext.Provider>
   );
