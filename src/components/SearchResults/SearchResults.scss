@@ -1,14 +1,35 @@
 @use "../../styles/index" as s;
 
 .location {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding: 25px 0;
   color: s.$primaryColor;
   border-bottom: 1px solid #fafafa;
-  cursor: pointer;
+  width: 100%;
 
   &:last-child {
     border-bottom: unset;
     padding-bottom: 15px;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    width: 70%;
+    min-width: 300px;
+    cursor: pointer;
   }
 
   &__city {
@@ -16,11 +37,11 @@
     margin: 0;
   }
 
-  &__details {
+  &__sub-details {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-top: 10px;
+    margin-top: 8px;
   }
 
   &__region {
@@ -36,5 +57,10 @@
     font-size: 16px;
     margin: 0;
     font-weight: 300;
+  }
+
+  &__remove-icon {
+    font-size: 20px;
+    cursor: pointer;
   }
 }

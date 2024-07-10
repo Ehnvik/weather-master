@@ -41,7 +41,14 @@ export const SearchLocation = () => {
   const searchHistory = [...locationHistory]
     .reverse()
     .map((location: LocationDetails) => {
-      return <SearchResults key={location.id} location={location} />;
+      return (
+        <SearchResults
+          key={location.id}
+          location={location}
+          removeIcon={<FontAwesomeIcon icon={"xmark"} />}
+          onUpdate={() => setLocationHistory(getValue())}
+        />
+      );
     });
 
   return (
@@ -61,7 +68,9 @@ export const SearchLocation = () => {
       <div className="search__results-container">
         {searchValue === "" && locationHistory.length > 0 && (
           <>
-            <p className="search__history-title">Search history...</p>
+            <div className="search__title-container">
+              <p className="search__title">Search history...</p>
+            </div>
             {searchHistory}
           </>
         )}

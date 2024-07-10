@@ -3,8 +3,8 @@ import { LocationDetails } from "../models/Location/Classes/LocationDetails";
 
 export const useRemoveLocation = () => {
   const removeLocation = useCallback(
-    (locations: LocationDetails[], locationId: number) => {
-      return locations.filter((location) => location.id === locationId);
+    (currentLocations: LocationDetails[], locationId: number) => {
+      return currentLocations.filter((location) => location.id !== locationId);
     },
     [],
   );

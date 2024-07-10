@@ -4,17 +4,25 @@ import "./SearchResults.scss";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useLocation } from "../../contexts/LocationContext";
 import { useSearchrContext } from "../../contexts/SearchContext";
+import { ReactNode } from "react";
+import { useRemoveLocation } from "../../hooks/useRemoveLocation";
 
 interface ISearchResultsProp {
   location: LocationDetails;
   onUpdate?: () => void;
+  removeIcon?: ReactNode;
 }
 
-export const SearchResults = ({ location, onUpdate }: ISearchResultsProp) => {
+export const SearchResults = ({
+  location,
+  onUpdate,
+  removeIcon,
+}: ISearchResultsProp) => {
   const { getLocation } = useWeather();
   const { toggleSearchContainer } = useSearchrContext();
   const { getValue, setValue } = useLocalStorage("locations");
   const { resetSearchResults } = useLocation();
+  const { removeLocation } = useRemoveLocation();
 
   const updateLocalStorage = (selectedLocation: LocationDetails) => {
     const currentLocations: LocationDetails[] = getValue();
@@ -41,15 +49,40 @@ export const SearchResults = ({ location, onUpdate }: ISearchResultsProp) => {
     toggleSearchContainer();
   };
 
+  const handleRemoveLocation = (selectedLocation: LocationDetails) => {
+    const currentLocations = getValue();
+    const newLocationList = removeLocation(
+      currentLocations,
+      selectedLocation.id,
+    );
+    setValue(newLocationList);
+    if (onUpdate) {
+      onUpdate();
+    }
+  };
+
   return (
-    <div onClick={() => handleSearchForm(location)} className="location">
-      <h3 className="location__city">{location.city}</h3>
-      <div className="location__details">
-        {location.region && (
-          <p className="location__region">{location.region}</p>
-        )}
-        <p className="location__country">{location.country}</p>
+    <div className="location">
+      <div className="location__container">
+        <div
+          onClick={() => handleSearchForm(location)}
+          className="location__details">
+          <h3 className="location__city">{location.city}</h3>
+          <div className="location__sub-details">
+            {location.region && (
+              <p className="location__region">{location.region}</p>
+            )}
+            <p className="location__country">{location.country}</p>
+          </div>
+        </div>
       </div>
+      {removeIcon && (
+        <div
+          onClick={() => handleRemoveLocation(location)}
+          className="location__remove-icon">
+          {removeIcon}
+        </div>
+      )}
     </div>
   );
 };
