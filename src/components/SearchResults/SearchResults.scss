@@ -6,6 +6,11 @@
   border-bottom: 1px solid #fafafa;
   cursor: pointer;
 
+  &:last-child {
+    border-bottom: unset;
+    padding-bottom: 15px;
+  }
+
   &__city {
     font-size: 22px;
     margin: 0;

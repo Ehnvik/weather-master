@@ -1,11 +1,11 @@
-import { IGeoLocations } from "../models/Location/Interfaces/ILocationsResponse";
+import { ILocationsResponse } from "../models/Location/Interfaces/ILocationsResponse";
 import { LocationDetails } from "../models/Location/Classes/LocationDetails";
 
 export const createLocationDetailsList = (
-  locations: IGeoLocations[],
+  locations: ILocationsResponse[],
 ): LocationDetails[] => {
   const filteredLocations = locations.filter(
-    (location: IGeoLocations) =>
+    (location: ILocationsResponse) =>
       location.class === "place" || location.class === "boundary",
   );
 

@@ -22,6 +22,7 @@ interface ILocationContext {
   searchValue: string;
   currentLocation: IGeolocationResponse;
   requestGeolocation: () => void;
+  resetSearchResults: () => void;
 }
 
 interface ILocationProviderProps {
@@ -41,6 +42,12 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     useState<IGeolocationResponse>(initialGeolocation);
 
   const { currentGeolocation, requestGeolocation } = useGeolocation();
+
+  const resetSearchResults = () => {
+    setLocations([]);
+    setSearchValue("");
+    setDebouncedValue("");
+  };
 
   useEffect(() => {
     if (currentGeolocation) {
@@ -66,6 +73,8 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     const handler = setTimeout(() => {
       if (searchValue.length >= 3) {
         setDebouncedValue(searchValue);
+      } else {
+        setLocations([]);
       }
     }, 1000);
 
@@ -91,6 +100,7 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
         searchValue,
         currentLocation,
         requestGeolocation,
+        resetSearchResults,
       }}>
       {children}
     </LocationsContext.Provider>

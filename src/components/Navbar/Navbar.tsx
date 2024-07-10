@@ -4,8 +4,8 @@ import "./Navbar.scss";
 import logo from "../../assets/weather-logo.png";
 import { FontAwesomeIcon } from "../../modules/iconLibrary";
 import { SearchLocation } from "../SearchLocation/SearchLocation";
-import { NavbarContext } from "../../contexts/NavbarContext";
 import { useLocation } from "../../contexts/LocationContext";
+import { SearchContext } from "../../contexts/SearchContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,9 @@ export const Navbar = () => {
 
       <div
         className={`navbar__search-container ${
-          isOpen ? "navbar__search-container--open" : ""
+          isOpen
+            ? "navbar__search-container--open"
+            : "navbar__search-container--close"
         }`}>
         <div className="navbar__close-icon-container">
           <FontAwesomeIcon
@@ -41,9 +43,9 @@ export const Navbar = () => {
             onClick={toggleSearchContainer}
           />
         </div>
-        <NavbarContext.Provider value={{ isOpen, toggleSearchContainer }}>
+        <SearchContext.Provider value={{ isOpen, toggleSearchContainer }}>
           <SearchLocation />
-        </NavbarContext.Provider>
+        </SearchContext.Provider>
       </div>
     </nav>
   );

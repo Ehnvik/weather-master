@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 
-interface INavbarContext {
+interface ISearchContext {
   isOpen: boolean;
   toggleSearchContainer: () => void;
 }
 
-export const NavbarContext = createContext<INavbarContext | null>(null);
+export const SearchContext = createContext<ISearchContext | null>(null);
 
-export const useNavbarContext = () => {
-  const context = useContext(NavbarContext);
+export const useSearchrContext = () => {
+  const context = useContext(SearchContext);
   if (!context) {
     throw new Error("Error trying to use context");
   }

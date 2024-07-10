@@ -3,8 +3,15 @@ import { FontAwesomeIcon } from "../../modules/iconLibrary";
 import { LocationDetails } from "../../models/Location/Classes/LocationDetails";
 import { useLocation } from "../../contexts/LocationContext";
 import { SearchResults } from "../SearchResults/SearchResults";
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const SearchLocation = () => {
+  const { getValue } = useLocalStorage("locations");
+
+  const [locationHistory, setLocationHistory] = useState<LocationDetails[]>(
+    getValue(),
+  );
   const {
     locations,
     searchValue,
@@ -15,13 +22,27 @@ export const SearchLocation = () => {
     setSearchLocation(searchValue);
   };
 
+  useEffect(() => {
+    setLocationHistory(getValue());
+  }, [getValue]);
+
   const searchResults = locations.map((location: LocationDetails) => {
     return (
       searchValue !== "" && (
-        <SearchResults key={location.id} location={location} />
+        <SearchResults
+          key={location.id}
+          location={location}
+          onUpdate={() => setLocationHistory(getValue())}
+        />
       )
     );
   });
+
+  const searchHistory = [...locationHistory]
+    .reverse()
+    .map((location: LocationDetails) => {
+      return <SearchResults key={location.id} location={location} />;
+    });
 
   return (
     <div className="search">
@@ -33,9 +54,19 @@ export const SearchLocation = () => {
           onChange={(e) => handleSearchValue(e.target.value)}
           placeholder="Search Location..."
         />
-        <FontAwesomeIcon className="search__icon" icon="search" />
+        <div className="search__icon-container">
+          <FontAwesomeIcon className="search__icon" icon="search" />
+        </div>
       </form>
-      <div className="search__results-container">{searchResults}</div>
+      <div className="search__results-container">
+        {searchValue === "" && locationHistory.length > 0 && (
+          <>
+            <p className="search__history-title">Search history...</p>
+            {searchHistory}
+          </>
+        )}
+        {searchValue !== "" && searchResults}
+      </div>
     </div>
   );
 };
