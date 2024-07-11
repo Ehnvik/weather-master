@@ -7,11 +7,14 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useSearchContext } from "../../contexts/SearchContext";
+import { useRemoveLocation } from "../../hooks/useRemoveLocation";
 
 export const SearchLocation = () => {
   const { getLocation } = useWeather();
   const { toggleSearchContainer } = useSearchContext();
   const { getValue, setValue } = useLocalStorage("locations");
+  const { removeLocation } = useRemoveLocation();
+
   const {
     locations,
     searchValue,
@@ -83,6 +86,18 @@ export const SearchLocation = () => {
     }
   };
 
+  const handleRemoveLocation = (selectedLocation: LocationDetails) => {
+    const currentLocations = getValue();
+
+    const newLocationList = removeLocation(
+      currentLocations,
+      selectedLocation.id,
+    );
+
+    setValue(newLocationList);
+    setLocationHistory(newLocationList);
+  };
+
   useEffect(() => {
     setSelectedIndex(0);
   }, [locations]);
@@ -101,17 +116,18 @@ export const SearchLocation = () => {
   }, []);
 
   const searchResults = locations.map(
-    (location: LocationDetails, index: number) => {
+    (location: LocationDetails, index: number, array: LocationDetails[]) => {
+      const isLastItem = index === array.length - 1;
       return (
         searchValue !== "" && (
           <SearchResults
             key={location.id}
             location={location}
-            onUpdate={() => setLocationHistory(getValue())}
             isSelected={index === selectedIndex}
             onSelect={() => handleLocationSelect(location)}
             ref={(element) => (searchResultsRef.current[index] = element)}
             onMouseEnter={() => handleMouseEnter(index)}
+            lastItem={isLastItem ? "location__last-item" : ""}
           />
         )
       );
@@ -120,16 +136,21 @@ export const SearchLocation = () => {
 
   const searchHistory = [...locationHistory]
     .reverse()
-    .map((location: LocationDetails) => {
-      return (
-        <SearchResults
-          key={location.id}
-          location={location}
-          removeIcon={<FontAwesomeIcon icon={"xmark"} />}
-          onUpdate={() => setLocationHistory(getValue())}
-        />
-      );
-    });
+    .map(
+      (location: LocationDetails, index: number, array: LocationDetails[]) => {
+        const isLastItem = index === array.length - 1;
+        return (
+          <SearchResults
+            key={location.id}
+            location={location}
+            removeIcon={<FontAwesomeIcon icon={"xmark"} />}
+            onSelect={() => handleLocationSelect(location)}
+            onRemove={() => handleRemoveLocation(location)}
+            lastItem={isLastItem ? "location__last-item" : ""}
+          />
+        );
+      },
+    );
 
   return (
     <div className="search">
@@ -153,7 +174,11 @@ export const SearchLocation = () => {
         {searchValue === "" && locationHistory.length > 0 && (
           <>
             <div className="search__title-container">
-              <p className="search__title">Search history...</p>
+              <FontAwesomeIcon
+                className="search__title-icon"
+                icon={"clock-rotate-left"}
+              />
+              <p className="search__title">Search history</p>
             </div>
             {searchHistory}
           </>
