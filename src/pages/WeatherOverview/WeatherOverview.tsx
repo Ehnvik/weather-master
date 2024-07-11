@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { images } from "../../modules/images";
 import { IWeatherIcon } from "../../models/Weather/Interfaces/IWeatherIcon";
-import "./Today.scss";
+import "./WeatherOverview.scss";
 import windIcon from "../../assets/wind.png";
 import humidityIcon from "../../assets/humidity.png";
 import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
@@ -13,7 +13,7 @@ import { useFormatUnits } from "../../hooks/useFormatUnits";
 import { FormattedWeatherUnits } from "../../models/Weather/Classes/FormattedWeatherUnits";
 import { initialWeatherUnits } from "../../initialValues/weather/initialWeatherUnits";
 
-export const Today = () => {
+export const WeatherOverview = () => {
   const [weatherIcon, setWeatherIcon] =
     useState<IWeatherIcon>(initialWeatherIcon);
   const [toggleDetails, setToggleDetails] = useState<boolean>(false);

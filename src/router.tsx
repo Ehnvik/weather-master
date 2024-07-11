@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Today } from "./pages/Today/Today";
 import { NavLayout } from "./components/NavLayout/NavLayout";
+import { WeatherOverview } from "./pages/WeatherOverview/WeatherOverview";
 
 export const router = createBrowserRouter([
   {
@@ -8,7 +8,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Today />,
+        element: <WeatherOverview />,
         index: true,
       },
     ],

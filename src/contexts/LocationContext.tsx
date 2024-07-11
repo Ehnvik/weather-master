@@ -50,6 +50,12 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   };
 
   useEffect(() => {
+    if (searchValue === "") {
+      resetSearchResults();
+    }
+  }, [searchValue]);
+
+  useEffect(() => {
     if (currentGeolocation) {
       setCoordinates(currentGeolocation);
     }

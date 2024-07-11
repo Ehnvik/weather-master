@@ -12,7 +12,14 @@
 
   &:last-child {
     border-bottom: unset;
-    padding-bottom: 15px;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &--selected {
+    background-color: #f0f0f0;
   }
 
   &__container {

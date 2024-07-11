@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import logo from "../../assets/weather-logo.png";
@@ -9,14 +9,32 @@ import { SearchContext } from "../../contexts/SearchContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { setSearchValue } = useLocation();
-
-  const { requestGeolocation } = useLocation();
+  const { requestGeolocation, setSearchValue } = useLocation();
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleSearchContainer = () => {
     setSearchValue("");
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="navbar">
@@ -31,6 +49,7 @@ export const Navbar = () => {
       </div>
 
       <div
+        ref={searchContainerRef}
         className={`navbar__search-container ${
           isOpen
             ? "navbar__search-container--open"

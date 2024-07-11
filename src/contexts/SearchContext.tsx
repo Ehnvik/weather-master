@@ -7,7 +7,7 @@ interface ISearchContext {
 
 export const SearchContext = createContext<ISearchContext | null>(null);
 
-export const useSearchrContext = () => {
+export const useSearchContext = () => {
   const context = useContext(SearchContext);
   if (!context) {
     throw new Error("Error trying to use context");

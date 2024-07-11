@@ -23,7 +23,7 @@
     border-radius: 18px;
     font-size: 18px;
     padding: 0 10px;
-    padding-right: 40px; /* Extra space for the icon */
+    padding-right: 40px;
     outline-color: s.$secondaryColor;
     color: s.$primaryColor;
     font-weight: 500;
@@ -51,13 +51,12 @@
     flex-direction: column;
     align-items: center;
     margin-top: 25px;
-    padding: 0 25px 15px 25px;
     width: 100%;
     text-align: center;
     overflow-y: auto;
     height: auto;
     max-height: 500px;
-    max-width: 600px;
+    max-width: 768px;
   }
 
   &__title-container {
