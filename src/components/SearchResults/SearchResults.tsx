@@ -40,12 +40,12 @@ export const SearchResults = forwardRef<HTMLDivElement, ISearchResultsProp>(
               <p className="location__country">{location.country}</p>
             </div>
           </div>
+          {removeIcon && (
+            <div onClick={onRemove} className="location__remove-icon">
+              {removeIcon}
+            </div>
+          )}
         </div>
-        {removeIcon && (
-          <div onClick={onRemove} className="location__remove-icon">
-            {removeIcon}
-          </div>
-        )}
       </div>
     );
   },
