@@ -6,6 +6,7 @@ body {
   height: 100%;
   font-family: s.$primaryFont;
   background-image: s.$primaryBgColor;
+  overflow: hidden;
 }
 
 * {
@@ -14,10 +15,18 @@ body {
 
 #root {
   height: 100%;
+  overflow: hidden;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .layout {
@@ -25,11 +34,13 @@ body {
   width: 100%;
   max-width: 1240px;
   color: s.$primaryColor;
-  background-image: s.$primaryBgColor;
+  z-index: 100;
+  overflow: auto;
+  // background-image: s.$primaryBgColor;
   // background-image: linear-gradient(to right, #141e30, #243b55); // Dark Theme background color
 
-  @include s.large {
-    box-shadow: 1px 0px 20px rgba(151, 149, 149, 0.8),
-      0px 10px 5px rgba(151, 149, 149, 0.1);
-  }
+  // @include s.large {
+  //   box-shadow: 1px 0px 20px rgba(151, 149, 149, 0.8),
+  //     0px 10px 5px rgba(151, 149, 149, 0.1);
+  // }
 }

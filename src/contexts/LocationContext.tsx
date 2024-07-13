@@ -68,6 +68,7 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
           coordinates.lat,
           coordinates.lon,
         );
+
         setCurrentLocation(response);
       }
     };

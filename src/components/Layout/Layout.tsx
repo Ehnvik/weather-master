@@ -1,9 +1,17 @@
+import { Airplane } from "../Animations/Airplane/Airplane";
+import { Clouds } from "../Animations/Clouds/Clouds";
 import "./Layout.scss";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export const Layout = (props: LayoutProps) => {
-  return <div className="layout">{props.children}</div>;
+export const Layout = ({ children }: LayoutProps) => {
+  return (
+    <div className="background">
+      <Clouds />
+      <Airplane />
+      <div className="layout">{children}</div>
+    </div>
+  );
 };

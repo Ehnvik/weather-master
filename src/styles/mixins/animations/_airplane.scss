@@ -1,0 +1,19 @@
+@mixin fly-right-animation($duration: 50s, $delay: 5s) {
+  animation: fly-right $duration linear infinite;
+  animation-delay: $delay;
+}
+
+@mixin fly-right-keyframes($distance: calc(100vw + 60px)) {
+  @keyframes fly-right {
+    0% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(#{$distance});
+    }
+
+    100% {
+      transform: translateX(#{$distance});
+    }
+  }
+}
