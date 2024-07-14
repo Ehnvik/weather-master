@@ -1,14 +1,23 @@
 .cloud {
   position: absolute;
   z-index: 10;
-  animation: move-left linear infinite;
+  animation: move-left linear forwards;
+
+  &__img {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+  }
 }
 
 @keyframes move-left {
   0% {
     transform: translateX(0);
   }
+
+  40% {
+    transform: translate(-140vw);
+  }
+
   100% {
-    transform: translateX(-100vw);
+    transform: translateX(-140vw);
   }
 }

@@ -1,57 +1,62 @@
 import { useEffect, useState } from "react";
 import "./Clouds.scss";
-import cloudImage from "../../../assets/04d.png";
 import { IClouds } from "../../../models/Weather/Interfaces/IClouds";
+import {
+  calculateCloudStyles,
+  createCloud,
+  generateRandomCloudProperties,
+} from "../../../utils/cloudAnimationHelpers";
 
 export const Clouds = () => {
   const [clouds, setClouds] = useState<IClouds[]>([]);
+  const [cloudAmount, setCloudAmount] = useState<number>(0);
 
   useEffect(() => {
-    const max: number = 90;
-    const min: number = 5;
-    const cloudList: IClouds[] = [];
-    for (let i = 0; i < 5; i++) {
-      let withAndHeight = Math.floor(Math.random() * (250 - 50 + 1) + 50);
-      const top = Math.floor(Math.random() * (max - min + 1) + min);
-      const left = Math.floor(Math.random() * (max - min + 1) + min);
-      const duration = Math.floor(Math.random() * (70 - 30 + 1) + 30);
+    setClouds(calculateCloudStyles(5));
 
-      if (withAndHeight % 2 !== 0) {
-        withAndHeight++;
-      }
+    const cloudInterval = setInterval(() => {
+      setCloudAmount((prevCloudAmount) => prevCloudAmount + 1);
+    }, 5000);
 
-      const cloud: IClouds = {
-        src: cloudImage,
-        width: `${withAndHeight}px`,
-        height: `${withAndHeight}px`,
-        top: `${top}%`,
-        left: `${left}%`,
-        duration: `${duration}s`,
-      };
-
-      cloudList.push(cloud);
-    }
-    setClouds(cloudList);
+    return () => clearInterval(cloudInterval);
   }, []);
 
-  const cloudAnimation = clouds.map((cloud: IClouds, index: number) => {
-    return (
-      <div
-        key={index}
-        className="cloud"
-        style={{
-          top: cloud.top,
-          left: cloud.left,
-          animationDuration: cloud.duration,
-        }}>
-        <img
-          src={cloud.src}
-          alt="cloud"
-          style={{ width: cloud.width, height: cloud.height }}
-        />
-      </div>
-    );
-  });
+  useEffect(() => {
+    if (cloudAmount > 0) {
+      let { widthAndHeight, top, duration } = generateRandomCloudProperties();
 
-  return <>{cloudAnimation}</>;
+      const newCloud = createCloud(110, top, widthAndHeight, duration);
+
+      setClouds((prevClouds) => [...prevClouds, newCloud]);
+    }
+  }, [cloudAmount]);
+
+  const handleOnAnimationEnd = (cloudId: string) => {
+    setClouds((prevClouds) =>
+      prevClouds.filter((cloud) => cloud.id !== cloudId),
+    );
+  };
+
+  return (
+    <>
+      {clouds.map((cloud) => (
+        <div
+          key={cloud.id}
+          className="cloud"
+          style={{
+            top: cloud.top,
+            left: cloud.left,
+            animationDuration: cloud.duration,
+          }}
+          onAnimationEnd={() => handleOnAnimationEnd(cloud.id)}>
+          <img
+            className="cloud__img"
+            src={cloud.src}
+            alt="cloud"
+            style={{ width: cloud.width, height: cloud.height }}
+          />
+        </div>
+      ))}
+    </>
+  );
 };

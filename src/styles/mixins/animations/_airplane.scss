@@ -3,7 +3,7 @@
   animation-delay: $delay;
 }
 
-@mixin fly-right-keyframes($distance: calc(100vw + 60px)) {
+@mixin fly-right-keyframes($distance: calc(130vw + 60px)) {
   @keyframes fly-right {
     0% {
       transform: translateX(0);
