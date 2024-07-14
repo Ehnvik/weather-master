@@ -1,0 +1,19 @@
+@mixin move-left-animation() {
+  animation: move-left linear forwards;
+}
+
+@mixin move-left-keyframes($distance: -180vw) {
+  @keyframes move-left {
+    0% {
+      transform: translateX(0);
+    }
+
+    40% {
+      transform: translateX(#{$distance});
+    }
+
+    100% {
+      transform: translateX(#{$distance});
+    }
+  }
+}

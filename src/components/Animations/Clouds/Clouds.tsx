@@ -16,7 +16,7 @@ export const Clouds = () => {
 
     const cloudInterval = setInterval(() => {
       setCloudAmount((prevCloudAmount) => prevCloudAmount + 1);
-    }, 5000);
+    }, 10000);
 
     return () => clearInterval(cloudInterval);
   }, []);

@@ -1,23 +1,12 @@
+@use "../../../styles/index" as s;
+
 .cloud {
   position: absolute;
   z-index: 10;
-  animation: move-left linear forwards;
+  @include s.move-left-animation();
+  @include s.move-left-keyframes();
 
   &__img {
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
-  }
-}
-
-@keyframes move-left {
-  0% {
-    transform: translateX(0);
-  }
-
-  40% {
-    transform: translate(-140vw);
-  }
-
-  100% {
-    transform: translateX(-140vw);
   }
 }
