@@ -27,6 +27,11 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
+  @include s.weather-background(s.$background-color-sun);
+
+  &::before {
+    @include s.weather-background-position(s.$background-color-sun-before);
+  }
 }
 
 .layout {

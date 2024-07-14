@@ -1,0 +1,16 @@
+@mixin weather-background($color) {
+  background: radial-gradient(circle at center, $color, transparent 70%);
+  box-shadow: 0 0 100px 50px $color;
+}
+
+@mixin weather-background-position($color) {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  filter: blur(50px);
+  background: $color;
+}

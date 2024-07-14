@@ -9,11 +9,11 @@
   width: 100%;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: s.$search-bar-color-selected;
   }
 
   &--selected {
-    background-color: #f0f0f0;
+    background-color: s.$search-bar-color-selected;
   }
 
   &__container {
