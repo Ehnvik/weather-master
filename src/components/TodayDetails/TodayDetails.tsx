@@ -18,83 +18,75 @@ export const TodayDetails = ({
   weatherUnits,
 }: ICollapsibleProps) => {
   return (
-    <div className="details">
-      <div className="details__summary">
-        <h3 className="details__summary-title">
+    <div className="info">
+      <div className="info__summary">
+        <h3 className="info__summary-title">
           {weatherDetails.daily[0].summary}
         </h3>
       </div>
-      <div className="details__container">
-        <div className="details__container__column">
-          <div className="details__item">
-            <img
-              className="details__icon details__icon"
-              src={uv}
-              alt="UV Icon"
-            />
-            <div className="details__level">
-              <p className="details__unit">{weatherDetails.current.uvi}</p>
-              <p className="details__text">UV Index</p>
+      <div className="info__container">
+        <div className="info__container__column">
+          <div className="info__item">
+            <img className="info__icon" src={uv} alt="UV Icon" />
+            <div className="info__level">
+              <p className="info__unit">{weatherDetails.current.uvi}</p>
+              <p className="info__text">UV Index</p>
             </div>
           </div>
-          <div className="details__item">
-            <img
-              className="details__icon details__icon"
-              src={clouds}
-              alt="Feels Like Icon"
-            />
-            <div className="details__level details__level">
-              <p className="details__unit">{weatherDetails.current.clouds}%</p>
-              <p className="details__text">Cloud Cover</p>
+          <div className="info__item">
+            <img className="info__icon" src={clouds} alt="Feels Like Icon" />
+            <div className="info__level info__level">
+              <p className="info__unit">{weatherDetails.current.clouds}%</p>
+              <p className="info__text">Cloud Cover</p>
             </div>
           </div>
-          <div className="details__item">
-            <img className="details__icon" src={dewPointIcon} alt="UV Icon" />
-            <div className="details__level">
-              <p className="details__unit">
+          <div className="info__item">
+            <img className="info__icon" src={dewPointIcon} alt="UV Icon" />
+            <div className="info__level">
+              <p className="info__unit">
                 {weatherUnits.dewPoint}&deg;<span>C</span>
               </p>
-              <p className="details__text">Dew Point</p>
+              <p className="info__text">Dew Point</p>
             </div>
           </div>
         </div>
 
-        <div className="details__container__column">
-          <div className="details__item">
+        <div className="info__container__column">
+          <div className="info__item">
             <img
-              className="details__icon details__icon--wind-degrees"
+              className="info__icon info__icon--wind-degrees"
               src={wind}
               alt="Wind Degrees Icon"
             />
-            <div className="details__level">
-              <p className="details__unit">
+            <div className="info__level">
+              <p className="info__unit">
                 {weatherDetails.current.wind_deg}&deg;
               </p>
-              <p className="details__text">Wind Degrees</p>
+              <p className="info__text">Wind Degrees</p>
             </div>
           </div>
-          <div className="details__item">
+          <div className="info__item">
             <img
-              className="details__icon details__icon--feels-like"
+              className="info__icon info__icon--feels-like"
               src={feelsLikeIcon}
               alt="Feels Like Icon"
             />
-            <div className="details__level details__level">
-              <p className="details__unit">
+            <div className="info__level">
+              <p className="info__unit">
                 {weatherUnits.feelsLike}&deg;<span>C</span>
               </p>
-              <p className="details__text">Feels Like</p>
+              <p className="info__text">Feels Like</p>
             </div>
           </div>
-          <div className="details__item">
+          <div className="info__item">
             <img
-              className="details__icon details__icon--feels-like"
+              className="info__icon info__icon--feels-like"
               src={visibilityIcon}
               alt="Feels Like Icon"
             />
-            <div className="details__level details__level">
-              <p className="details__unit">{weatherUnits.visibility} km</p>
-              <p className="details__text">Visibility</p>
+            <div className="info__level">
+              <p className="info__unit">{weatherUnits.visibility} km</p>
+              <p className="info__text">Visibility</p>
             </div>
           </div>
         </div>

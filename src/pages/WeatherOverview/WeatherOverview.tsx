@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import "./WeatherOverview.scss";
-import windIcon from "../../assets/wind.png";
-import humidityIcon from "../../assets/humidity.png";
 import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useLocation } from "../../contexts/LocationContext";
@@ -9,6 +7,7 @@ import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { useFormatUnits } from "../../hooks/useFormatUnits";
 import { FormattedWeatherUnits } from "../../models/Weather/Classes/FormattedWeatherUnits";
 import { initialWeatherUnits } from "../../initialValues/weather/initialWeatherUnits";
+import { WeatherDetails } from "../../components/WeatherDetails/WeatherDetails";
 
 export const WeatherOverview = () => {
   const [toggleDetails, setToggleDetails] = useState<boolean>(false);
@@ -54,39 +53,10 @@ export const WeatherOverview = () => {
           )}
           <p className="weather__country">{location.country}</p>
         </div>
-        <div className="weather__extra-info">
-          <div className="weather__extra-info__humidity">
-            <img
-              className="weather__extra-info__humidity__icon"
-              src={humidityIcon}
-              alt="Humidity Icon"
-            />
-            <div className="weather__extra-info__humidity__level">
-              <p className="weather__extra-info__humidity__level--unit">
-                {weatherData.current.humidity}%
-              </p>
-              <p className="weather__extra-info__humidity__level--text">
-                Humidity
-              </p>
-            </div>
-          </div>
-
-          <div className="weather__extra-info__wind">
-            <img
-              className="weather__extra-info__wind__icon"
-              src={windIcon}
-              alt="Wind Icon"
-            />
-            <div className="weather__extra-info__wind__speed">
-              <p className="weather__extra-info__wind__speed--unit">
-                {weatherUnits.windSpeed}m/s
-              </p>
-              <p className="weather__extra-info__wind__speed--text">
-                Wind Speed
-              </p>
-            </div>
-          </div>
-        </div>
+        <WeatherDetails
+          weatherDetails={weatherData}
+          weatherUnits={weatherUnits}
+        />
       </div>
       <button
         className="weather__details-button"

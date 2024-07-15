@@ -1,0 +1,37 @@
+@use "../../styles/index" as s;
+
+.details {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(250, 250, 250, 0.5);
+  width: 100%;
+  border-radius: 50px;
+  padding: 25px 0;
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__icon {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  &__level {
+    text-align: start;
+    margin-left: 5px;
+  }
+
+  &__unit {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 14px;
+  }
+}

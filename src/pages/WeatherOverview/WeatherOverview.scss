@@ -74,65 +74,6 @@
     }
   }
 
-  &__extra-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 30px;
-    padding-bottom: 25px;
-
-    &__humidity {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 5px;
-
-      &__icon {
-        max-width: 40px;
-        max-height: 40px;
-        color: s.$primaryColor;
-      }
-
-      &__level {
-        &--unit {
-          margin: 0;
-          font-size: 28px;
-        }
-        &--text {
-          margin: 0;
-          font-size: 16px;
-          font-weight: 400;
-        }
-      }
-    }
-
-    &__wind {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 5px;
-
-      &__icon {
-        max-width: 40px;
-        max-height: 40px;
-        color: s.$primaryColor;
-      }
-
-      &__speed {
-        &--unit {
-          margin: 0;
-          font-size: 28px;
-        }
-        &--text {
-          margin: 0;
-          font-size: 16px;
-          font-weight: 400;
-        }
-      }
-    }
-  }
-
   &__details-button {
     font-family: s.$primaryFont;
     font-size: 18px;
