@@ -27,10 +27,21 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  @include s.weather-background(s.$background-color-sun);
 
-  &::before {
-    @include s.weather-background-position(s.$background-color-sun-before);
+  &--sun {
+    @include s.weather-background(s.$background-color-sun);
+
+    &::before {
+      @include s.weather-background-position(s.$background-color-sun-before);
+    }
+  }
+
+  &--cloud {
+    @include s.weather-background(s.$background-color-clouds);
+
+    &::before {
+      @include s.weather-background-position(s.$background-color-clouds-before);
+    }
   }
 }
 

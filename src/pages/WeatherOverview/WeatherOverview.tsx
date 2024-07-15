@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { images } from "../../modules/images";
-import { IWeatherIcon } from "../../models/Weather/Interfaces/IWeatherIcon";
 import "./WeatherOverview.scss";
 import windIcon from "../../assets/wind.png";
 import humidityIcon from "../../assets/humidity.png";
 import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
 import { useWeather } from "../../contexts/WeatherContext";
-import { initialWeatherIcon } from "../../initialValues/weather/initialWeatherIcon";
 import { useLocation } from "../../contexts/LocationContext";
 import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { useFormatUnits } from "../../hooks/useFormatUnits";
@@ -14,13 +11,11 @@ import { FormattedWeatherUnits } from "../../models/Weather/Classes/FormattedWea
 import { initialWeatherUnits } from "../../initialValues/weather/initialWeatherUnits";
 
 export const WeatherOverview = () => {
-  const [weatherIcon, setWeatherIcon] =
-    useState<IWeatherIcon>(initialWeatherIcon);
   const [toggleDetails, setToggleDetails] = useState<boolean>(false);
   const [weatherUnits, setWeatherUnits] =
     useState<FormattedWeatherUnits>(initialWeatherUnits);
 
-  const { weatherData, location, getLocation } = useWeather();
+  const { weatherData, location, getLocation, weatherIcon } = useWeather();
   const { currentLocation: currentPosition } = useLocation();
 
   const { geolocation } = useCurrentLocation(currentPosition);
@@ -34,16 +29,7 @@ export const WeatherOverview = () => {
     if (formattedUnits) {
       setWeatherUnits(formattedUnits);
     }
-    selectWeatherIcon();
   }, [formattedUnits]);
-
-  const selectWeatherIcon = () => {
-    images.forEach((image) => {
-      if (image.id === weatherData.current.weather[0].icon) {
-        setWeatherIcon(image);
-      }
-    });
-  };
 
   return (
     <div className="weather">
