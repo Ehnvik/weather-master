@@ -6,10 +6,17 @@ import { FontAwesomeIcon } from "../../modules/iconLibrary";
 import { SearchLocation } from "../SearchLocation/SearchLocation";
 import { useLocation } from "../../contexts/LocationContext";
 import { SearchContext } from "../../contexts/SearchContext";
+import { useWeather } from "../../contexts/WeatherContext";
+import { useWeatherBackground } from "../../hooks/useWeatherBackground";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { requestGeolocation, setSearchValue } = useLocation();
+  const { weatherIcon } = useWeather();
+  const { backgroundClass } = useWeatherBackground(
+    weatherIcon,
+    "navbar__search-container",
+  );
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleSearchContainer = () => {
@@ -50,11 +57,11 @@ export const Navbar = () => {
 
       <div
         ref={searchContainerRef}
-        className={`navbar__search-container ${
+        className={`navbar__search-container ${backgroundClass} ${
           isOpen
-            ? "navbar__search-container--open"
+            ? `navbar__search-container--open `
             : "navbar__search-container--close"
-        }`}>
+        } `}>
         <div className="navbar__close-icon-container">
           <FontAwesomeIcon
             className="navbar__close-icon"

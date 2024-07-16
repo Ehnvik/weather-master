@@ -1,4 +1,5 @@
 import { useWeather } from "../../contexts/WeatherContext";
+import { useWeatherBackground } from "../../hooks/useWeatherBackground";
 import { Airplane } from "../Animations/Airplane/Airplane";
 import { Clouds } from "../Animations/Clouds/Clouds";
 import "./Layout.scss";
@@ -9,13 +10,10 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const { weatherIcon } = useWeather();
+  const { backgroundClass } = useWeatherBackground(weatherIcon, "background");
+
   return (
-    <div
-      className={`background ${
-        weatherIcon.id === "01d" || weatherIcon.id === "02d"
-          ? "background--sun"
-          : "background--cloud"
-      }`}>
+    <div className={`background ${backgroundClass}`}>
       <Clouds />
       <Airplane />
       <div className="layout">{children}</div>

@@ -16,13 +16,10 @@ $background-color-sun-before: radial-gradient(
 );
 
 $background-color-clouds: rgba(88, 96, 125, 0.5);
-$background-color-clouds-before: radial-gradient(
-  circle at center,
-  rgba(88, 96, 125, 0.5),
-  transparent 70%
-);
+$background-color-clouds-before: linear-gradient(to left, #67a2be, #a8a8a8);
 
 $search-bar-color-sun: linear-gradient(to left, #83bad4, #eee69d);
+$search-bar-color-clouds: linear-gradient(to left, #67a2be, #a8a8a8);
 
 $search-bar-color-selected: #f0f0f0;
 
