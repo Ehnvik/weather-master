@@ -1,64 +1,58 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./WeatherOverview.scss";
-import { TodayDetails } from "../../components/TodayDetails/TodayDetails";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useLocation } from "../../contexts/LocationContext";
 import { useCurrentLocation } from "../../hooks/useCurrentLocation";
-import { useFormatUnits } from "../../hooks/useFormatUnits";
-import { FormattedWeatherUnits } from "../../models/Weather/Classes/FormattedWeatherUnits";
-import { initialWeatherUnits } from "../../initialValues/weather/initialWeatherUnits";
 import { WeatherDetails } from "../../components/WeatherDetails/WeatherDetails";
+import { useParams } from "react-router-dom";
 
 export const WeatherOverview = () => {
-  const [toggleDetails, setToggleDetails] = useState<boolean>(false);
-  const [weatherUnits, setWeatherUnits] =
-    useState<FormattedWeatherUnits>(initialWeatherUnits);
-
-  const { weatherData, location, getLocation, weatherIcon } = useWeather();
-  const { currentLocation: currentPosition } = useLocation();
+  const { getLocation, weatherLocationData } = useWeather();
+  const { currentLocation: currentPosition, selectedLocation } = useLocation();
 
   const { geolocation } = useCurrentLocation(currentPosition);
-  const { formattedUnits } = useFormatUnits(weatherData);
+  const { id } = useParams();
 
   useEffect(() => {
-    getLocation(geolocation);
-  }, [geolocation]);
-
-  useEffect(() => {
-    if (formattedUnits) {
-      setWeatherUnits(formattedUnits);
+    if (id) {
+      if (selectedLocation.id.toString() === id) {
+        getLocation(selectedLocation);
+      }
+    } else {
+      getLocation(geolocation);
     }
-  }, [formattedUnits]);
+  }, [id, geolocation]);
 
   return (
     <div className="weather">
       <div className="weather__info">
         <img
           className="weather__info__icon"
-          src={weatherIcon.src}
+          src={weatherLocationData.icon.src}
           alt="Weather Icon"
         />
         <h2 className="weather__info__temp">
-          {weatherUnits.currentTemp}&deg;
+          {weatherLocationData.formattedUnits.currentTemp}&deg;
           <span className="weather__info__temp--celsius">C</span>
         </h2>
         <div className="weather__info__high-low-temp">
-          <p>H:{weatherUnits.maxTemp}&deg;</p>
-          <p>L:{weatherUnits.minTemp}&deg;</p>
+          <p>H:{weatherLocationData.formattedUnits.maxTemp}&deg;</p>
+          <p>L:{weatherLocationData.formattedUnits.minTemp}&deg;</p>
         </div>
-        <h1 className="weather__city">{location.city}</h1>
+        <h1 className="weather__city">{weatherLocationData.location.city}</h1>
         <div className="weather__details">
-          {location.region && (
-            <p className="weather__region">{location.region}</p>
+          {weatherLocationData.location.region && (
+            <p className="weather__region">
+              {weatherLocationData.location.region}
+            </p>
           )}
-          <p className="weather__country">{location.country}</p>
+          <p className="weather__country">
+            {weatherLocationData.location.country}
+          </p>
         </div>
-        <WeatherDetails
-          weatherDetails={weatherData}
-          weatherUnits={weatherUnits}
-        />
+        <WeatherDetails weatherLocationData={weatherLocationData} />
       </div>
-      <button
+      {/* <button
         className="weather__details-button"
         onClick={() => setToggleDetails(!toggleDetails)}>
         {!toggleDetails ? "More Details" : "Hide Details"}
@@ -67,8 +61,9 @@ export const WeatherOverview = () => {
         <TodayDetails
           weatherDetails={weatherData}
           weatherUnits={weatherUnits}
+          weatherLocationData={weatherLocationData}
         />
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

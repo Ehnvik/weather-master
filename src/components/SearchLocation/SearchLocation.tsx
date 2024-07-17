@@ -5,21 +5,22 @@ import { useLocation } from "../../contexts/LocationContext";
 import { SearchResults } from "../SearchResults/SearchResults";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { useWeather } from "../../contexts/WeatherContext";
 import { useSearchContext } from "../../contexts/SearchContext";
 import { useRemoveLocation } from "../../hooks/useRemoveLocation";
+import { useNavigate } from "react-router-dom";
 
 export const SearchLocation = () => {
-  const { getLocation } = useWeather();
   const { toggleSearchContainer } = useSearchContext();
   const { getValue, setValue } = useLocalStorage("locations");
   const { removeLocation } = useRemoveLocation();
+  const navigate = useNavigate();
 
   const {
     locations,
     searchValue,
     setSearchValue: setSearchLocation,
     resetSearchResults,
+    setSelectedLocation,
   } = useLocation();
 
   const [locationHistory, setLocationHistory] = useState<LocationDetails[]>(
@@ -37,7 +38,7 @@ export const SearchLocation = () => {
     e.preventDefault();
 
     if (searchValue.length > 0 && locations.length > 0) {
-      getLocation(locations[0]);
+      setSelectedLocation(locations[0]);
       updateLocalStorage(locations[0]);
       resetSearchResults();
       toggleSearchContainer();
@@ -60,10 +61,11 @@ export const SearchLocation = () => {
   };
 
   const handleLocationSelect = (selectedLocation: LocationDetails) => {
-    getLocation(selectedLocation);
+    setSelectedLocation(selectedLocation);
     updateLocalStorage(selectedLocation);
     resetSearchResults();
     toggleSearchContainer();
+    navigate(`/search/${selectedLocation.id}`);
   };
 
   const handleMouseEnter = (index: number) => {

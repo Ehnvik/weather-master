@@ -11,6 +11,10 @@ export const router = createBrowserRouter([
         element: <WeatherOverview />,
         index: true,
       },
+      {
+        path: "/search/:id",
+        element: <WeatherOverview />,
+      },
     ],
   },
 ]);

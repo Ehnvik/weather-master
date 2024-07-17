@@ -13,12 +13,14 @@ import { initialLocationDetails } from "../initialValues/location/initialLocatio
 import { initialWeatherIcon } from "../initialValues/weather/initialWeatherIcon";
 import { IWeatherIcon } from "../models/Weather/Interfaces/IWeatherIcon";
 import { images } from "../modules/images";
+import { useFormatUnits } from "../hooks/useFormatUnits";
+import { WeatherLocationData } from "../models/Weather/Classes/WeatherLocationData";
+import { initialWeatherLocationData } from "../initialValues/weather/initialWeatherLocationData";
 
 interface IWeatherContext {
-  weatherData: IWeatherResponse;
   getLocation: (location: LocationDetails) => void;
-  location: LocationDetails;
   weatherIcon: IWeatherIcon;
+  weatherLocationData: WeatherLocationData;
 }
 
 interface IWeatherProviderProps {
@@ -35,12 +37,49 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
     initialLocationDetails,
   );
 
-  const [weatherIcon, setWeatherIcon] =
-    useState<IWeatherIcon>(initialWeatherIcon);
+  const [weatherIcon, setWeatherIcon] = useState<IWeatherIcon>(() => {
+    const data = localStorage.getItem("weatherIcon");
+    return data ? JSON.parse(data) : initialWeatherIcon;
+  });
+
+  const [weatherLocationData, setWeatherLocationData] =
+    useState<WeatherLocationData>(() => {
+      const data = localStorage.getItem("weatherLocationData");
+      return data ? JSON.parse(data) : initialWeatherLocationData;
+    });
+
+  const { formattedUnits } = useFormatUnits(weatherData);
 
   const getLocation = (location: LocationDetails) => {
     setLocation(location);
   };
+
+  const sendWeatherLocationDataToLocalStorage = (
+    weatherLocationData: WeatherLocationData,
+  ) => {
+    localStorage.setItem(
+      "weatherLocationData",
+      JSON.stringify(weatherLocationData),
+    );
+  };
+
+  const sendWeatherIconToLocalStorage = (weatherIcon: IWeatherIcon) => {
+    localStorage.setItem("weatherIcon", JSON.stringify(weatherIcon));
+  };
+
+  useEffect(() => {
+    if (formattedUnits) {
+      const weatherLocationData = new WeatherLocationData(
+        weatherData,
+        location,
+        formattedUnits,
+        weatherIcon,
+      );
+      setWeatherLocationData(weatherLocationData);
+      sendWeatherLocationDataToLocalStorage(weatherLocationData);
+      sendWeatherIconToLocalStorage(weatherIcon);
+    }
+  }, [weatherData, weatherIcon]);
 
   useEffect(() => {
     images.forEach((image) => {
@@ -62,7 +101,11 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
 
   return (
     <WeatherContext.Provider
-      value={{ weatherData, getLocation, location, weatherIcon }}>
+      value={{
+        getLocation,
+        weatherIcon,
+        weatherLocationData,
+      }}>
       {children}
     </WeatherContext.Provider>
   );

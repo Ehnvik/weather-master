@@ -15,6 +15,7 @@ import { useGeolocation } from "../hooks/useGeolocation";
 import { ILocationCoordinates } from "../models/Location/Interfaces/ILocationCoordinates";
 import { IGeolocationResponse } from "../models/Location/Interfaces/IGeolocationResponse";
 import { initialGeolocation } from "../initialValues/location/initialGeolocation";
+import { initialLocationDetails } from "../initialValues/location/initialLocationDetails";
 
 interface ILocationContext {
   locations: LocationDetails[];
@@ -23,6 +24,8 @@ interface ILocationContext {
   currentLocation: IGeolocationResponse;
   requestGeolocation: () => void;
   resetSearchResults: () => void;
+  setSelectedLocation: (location: LocationDetails) => void;
+  selectedLocation: LocationDetails;
 }
 
 interface ILocationProviderProps {
@@ -32,6 +35,9 @@ interface ILocationProviderProps {
 const LocationsContext = createContext<ILocationContext | null>(null);
 
 export const LocationProvider = ({ children }: ILocationProviderProps) => {
+  const [selectedLocation, setSelectedLocation] = useState<LocationDetails>(
+    initialLocationDetails,
+  );
   const [searchValue, setSearchValue] = useState<string>("");
   const [locations, setLocations] = useState<LocationDetails[]>([]);
   const [debouncedValue, setDebouncedValue] = useState<string>("");
@@ -108,6 +114,8 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
         currentLocation,
         requestGeolocation,
         resetSearchResults,
+        setSelectedLocation,
+        selectedLocation,
       }}>
       {children}
     </LocationsContext.Provider>
