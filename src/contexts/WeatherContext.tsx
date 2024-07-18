@@ -68,7 +68,7 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   };
 
   useEffect(() => {
-    if (formattedUnits) {
+    if (formattedUnits && location.lat !== "" && location.lon !== "") {
       const weatherLocationData = new WeatherLocationData(
         weatherData,
         location,
@@ -79,7 +79,7 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
       sendWeatherLocationDataToLocalStorage(weatherLocationData);
       sendWeatherIconToLocalStorage(weatherIcon);
     }
-  }, [weatherData, weatherIcon]);
+  }, [weatherData, weatherIcon, formattedUnits]);
 
   useEffect(() => {
     images.forEach((image) => {

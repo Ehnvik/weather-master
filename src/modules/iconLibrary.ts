@@ -4,9 +4,10 @@ import {
   faCircleXmark,
   faXmark,
   faClockRotateLeft,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-library.add(faSearch, faCircleXmark, faXmark, faClockRotateLeft);
+library.add(faSearch, faCircleXmark, faXmark, faClockRotateLeft, faLocationDot);
 
 export { FontAwesomeIcon };

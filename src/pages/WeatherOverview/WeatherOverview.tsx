@@ -5,6 +5,7 @@ import { useLocation } from "../../contexts/LocationContext";
 import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { WeatherDetails } from "../../components/WeatherDetails/WeatherDetails";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const WeatherOverview = () => {
   const { getLocation, weatherLocationData } = useWeather();
@@ -26,6 +27,23 @@ export const WeatherOverview = () => {
   return (
     <div className="weather">
       <div className="weather__info">
+        <div className="weather__city-container">
+          <FontAwesomeIcon
+            className="weather__city-icon"
+            icon={"location-dot"}
+          />
+          <h1 className="weather__city">{weatherLocationData.location.city}</h1>
+        </div>
+        <div className="weather__details">
+          {weatherLocationData.location.region && (
+            <p className="weather__region">
+              {weatherLocationData.location.region}
+            </p>
+          )}
+          <p className="weather__country">
+            {weatherLocationData.location.country}
+          </p>
+        </div>
         <img
           className="weather__info__icon"
           src={weatherLocationData.icon.src}
@@ -39,17 +57,9 @@ export const WeatherOverview = () => {
           <p>H:{weatherLocationData.formattedUnits.maxTemp}&deg;</p>
           <p>L:{weatherLocationData.formattedUnits.minTemp}&deg;</p>
         </div>
-        <h1 className="weather__city">{weatherLocationData.location.city}</h1>
-        <div className="weather__details">
-          {weatherLocationData.location.region && (
-            <p className="weather__region">
-              {weatherLocationData.location.region}
-            </p>
-          )}
-          <p className="weather__country">
-            {weatherLocationData.location.country}
-          </p>
-        </div>
+        <h3 className="weather__description">
+          {weatherLocationData.weatherData.current.weather[0].description}
+        </h3>
         <WeatherDetails weatherLocationData={weatherLocationData} />
       </div>
       {/* <button
