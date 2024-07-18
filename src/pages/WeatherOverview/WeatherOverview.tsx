@@ -6,6 +6,7 @@ import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { WeatherDetails } from "../../components/WeatherDetails/WeatherDetails";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DailyForecastSlider } from "../../components/DailyForecastSlider/DailyForecastSlider";
 
 export const WeatherOverview = () => {
   const { getLocation, weatherLocationData } = useWeather();
@@ -62,18 +63,7 @@ export const WeatherOverview = () => {
         </h3>
         <WeatherDetails weatherLocationData={weatherLocationData} />
       </div>
-      {/* <button
-        className="weather__details-button"
-        onClick={() => setToggleDetails(!toggleDetails)}>
-        {!toggleDetails ? "More Details" : "Hide Details"}
-      </button>
-      {toggleDetails ? (
-        <TodayDetails
-          weatherDetails={weatherData}
-          weatherUnits={weatherUnits}
-          weatherLocationData={weatherLocationData}
-        />
-      ) : null} */}
+      <DailyForecastSlider />
     </div>
   );
 };

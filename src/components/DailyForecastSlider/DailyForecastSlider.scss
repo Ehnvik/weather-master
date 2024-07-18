@@ -1,0 +1,51 @@
+.swiper_container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  max-width: 75px;
+  max-height: 75px;
+  margin-bottom: 20px;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+.arrow-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.swiper-pagination {
+  position: unset;
+}
+
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  max-width: 220px;
+}
+
+.arrow {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.arrow-left {
+}
+
+.arrow-right {
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #fafafa;
+}
