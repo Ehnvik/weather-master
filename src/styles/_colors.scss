@@ -21,6 +21,18 @@ $background-color-clouds-before: linear-gradient(to left, #67a2be, #a8a8a8);
 $search-bar-color-sun: linear-gradient(to left, #83bad4, #eee69d);
 $search-bar-color-clouds: linear-gradient(to left, #67a2be, #a8a8a8);
 
+$hourly-weather-color-clouds: linear-gradient(
+  to right,
+  rgba(195, 199, 200, 0.5),
+  rgba(213, 232, 240, 0.5)
+);
+
+$hourly-weather-color-sun: linear-gradient(
+  to left,
+  rgba(131, 186, 212, 0.5),
+  rgba(238, 230, 157, 0.5)
+);
+
 $search-bar-color-selected: #f0f0f0;
 
 // Color opacity

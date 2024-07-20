@@ -1,3 +1,5 @@
+@use "../../styles/index" as s;
+
 .swiper_container {
   position: relative;
   width: 100%;
@@ -7,16 +9,9 @@
 }
 
 .swiper-slide {
-  background-position: center;
-  background-size: cover;
-  max-width: 75px;
-  max-height: 75px;
+  max-width: 60px;
+  max-height: 120px;
   margin-bottom: 20px;
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
 }
 
 .arrow-container {
@@ -40,12 +35,49 @@
   cursor: pointer;
 }
 
-.arrow-left {
-}
-
-.arrow-right {
-}
-
 .swiper-pagination-bullet-active {
   background-color: #fafafa;
+}
+
+.hourly-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50px;
+
+  &--sun {
+    background: s.$hourly-weather-color-sun;
+  }
+
+  &--clouds {
+    background: s.$hourly-weather-color-clouds;
+  }
+
+  &__time,
+  &__temp {
+    font-weight: 500;
+  }
+
+  &__time {
+    margin: 0;
+    font-size: 14px;
+    padding-top: 10px;
+  }
+
+  &__icon {
+    max-width: 50px;
+    max-height: 50px;
+    padding: 5px 0;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+  }
+
+  &__temp {
+    margin: 0;
+    font-size: 14px;
+    padding-bottom: 10px;
+
+    &--celsius {
+      font-size: 12px;
+    }
+  }
 }

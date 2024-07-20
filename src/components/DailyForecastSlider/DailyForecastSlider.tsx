@@ -13,9 +13,7 @@ import "./DailyForecastSlider.scss";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useEffect, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
-import { IHourlyTime } from "../../models/Weather/Interfaces/IHourlyTime";
 import { images } from "../../modules/images";
-import { IWeatherIcon } from "../../models/Weather/Interfaces/IWeatherIcon";
 import { IHourlyWeather } from "../../models/Weather/Interfaces/IHourlyWeather";
 import { HourlyWeather } from "../../models/Weather/Classes/HourlyWeather";
 
@@ -33,13 +31,20 @@ export const DailyForecastSlider = () => {
       const icon = findCorrectWeatherIcon(hourlyWeather.weather[0].icon);
       const temp = formatHourlyWeatherTemp(hourlyWeather);
       if (icon) {
-        hourlyWeatherList.push(new HourlyWeather(temp, icon, time));
+        hourlyWeatherList.push(
+          new HourlyWeather(`${Date.now()}-${Math.random()}`, temp, icon, time),
+        );
       }
     }
-    console.log(hourlyWeatherList);
-
     setHourlyWeatherList(hourlyWeatherList);
   }, [weatherLocationData]);
+
+  const backgroundClass = () => {
+    return weatherLocationData.icon.id === "01d" ||
+      weatherLocationData.icon.id === "02d"
+      ? `hourly-weather--sun`
+      : `hourly-weather--clouds`;
+  };
 
   const convertUnixTime = (hourlyWeather: IHourlyWeather, index: number) => {
     if (index === 0) {
@@ -49,7 +54,7 @@ export const DailyForecastSlider = () => {
       return formatInTimeZone(
         date,
         weatherLocationData.weatherData.timezone,
-        "HH:mm:ss",
+        "HH:mm",
       );
     }
   };
@@ -62,6 +67,25 @@ export const DailyForecastSlider = () => {
     return Math.round(hourlyWeather.temp);
   };
 
+  const displayHourlyWeatherList = hourlyWeatherList.map((hourlyWeather) => {
+    return (
+      <SwiperSlide key={hourlyWeather.id}>
+        <div className={`hourly-weather ${backgroundClass()}`}>
+          <p className="hourly-weather__time">{hourlyWeather.time}</p>
+          <img
+            className="hourly-weather__icon"
+            src={hourlyWeather.icon.src}
+            alt="Weather Icon"
+          />
+          <p className="hourly-weather__temp">
+            {hourlyWeather.temp}&deg;
+            <span className="hourly-weather__temp--celsius">C</span>
+          </p>
+        </div>
+      </SwiperSlide>
+    );
+  });
+
   return (
     <div className="swiper_container">
       <Swiper
@@ -70,11 +94,13 @@ export const DailyForecastSlider = () => {
         centeredSlides={true}
         loop={false}
         slidesPerView={"auto"}
+        spaceBetween={20}
         coverflowEffect={{
           rotate: 0,
           stretch: 0,
           depth: 100,
           modifier: 2.5,
+          slideShadows: false,
         }}
         pagination={{ el: ".swiper-pagination", clickable: true }}
         navigation={{
@@ -83,72 +109,7 @@ export const DailyForecastSlider = () => {
         }}
         modules={[EffectCoverflow, Pagination, Navigation]}
         className="swiper-wrapper">
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-1.jpg"
-            alt="Nature 1"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-2.jpg"
-            alt="Nature 2"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-3.jpg"
-            alt="Nature 3"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-4.jpg"
-            alt="Nature 4"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-5.jpg"
-            alt="Nature 5"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-6.jpg"
-            alt="Nature 6"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-7.jpg"
-            alt="Nature 7"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-8.jpg"
-            alt="Nature 8"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-9.jpg"
-            alt="Nature 9"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-5.jpg"
-            alt="Nature 5"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://swiperjs.com/demos/images/nature-6.jpg"
-            alt="Nature 6"
-          />
-        </SwiperSlide>
+        {displayHourlyWeatherList}
       </Swiper>
       <div className="arrow-container">
         <FontAwesomeIcon
