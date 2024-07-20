@@ -11,10 +11,56 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./DailyForecastSlider.scss";
 import { useWeather } from "../../contexts/WeatherContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { formatInTimeZone } from "date-fns-tz";
+import { IHourlyTime } from "../../models/Weather/Interfaces/IHourlyTime";
+import { images } from "../../modules/images";
+import { IWeatherIcon } from "../../models/Weather/Interfaces/IWeatherIcon";
+import { IHourlyWeather } from "../../models/Weather/Interfaces/IHourlyWeather";
+import { HourlyWeather } from "../../models/Weather/Classes/HourlyWeather";
 
 export const DailyForecastSlider = () => {
+  const [hourlyWeatherList, setHourlyWeatherList] = useState<HourlyWeather[]>(
+    [],
+  );
   const { weatherLocationData } = useWeather();
+
+  useEffect(() => {
+    const hourlyWeatherList: HourlyWeather[] = [];
+    for (let i = 0; i < 12; i++) {
+      const hourlyWeather = weatherLocationData.weatherData.hourly[i];
+      const time = convertUnixTime(hourlyWeather, i);
+      const icon = findCorrectWeatherIcon(hourlyWeather.weather[0].icon);
+      const temp = formatHourlyWeatherTemp(hourlyWeather);
+      if (icon) {
+        hourlyWeatherList.push(new HourlyWeather(temp, icon, time));
+      }
+    }
+    console.log(hourlyWeatherList);
+
+    setHourlyWeatherList(hourlyWeatherList);
+  }, [weatherLocationData]);
+
+  const convertUnixTime = (hourlyWeather: IHourlyWeather, index: number) => {
+    if (index === 0) {
+      return "Now";
+    } else {
+      const date = new Date(hourlyWeather.dt * 1000);
+      return formatInTimeZone(
+        date,
+        weatherLocationData.weatherData.timezone,
+        "HH:mm:ss",
+      );
+    }
+  };
+
+  const findCorrectWeatherIcon = (icon: string) => {
+    return images.find((image) => image.id === icon);
+  };
+
+  const formatHourlyWeatherTemp = (hourlyWeather: IHourlyWeather) => {
+    return Math.round(hourlyWeather.temp);
+  };
 
   return (
     <div className="swiper_container">
