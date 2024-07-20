@@ -19,7 +19,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
 }
 
 .swiper-pagination {
@@ -31,7 +30,7 @@
 }
 
 .arrow {
-  font-size: 20px;
+  font-size: 25px;
   cursor: pointer;
 }
 
@@ -44,6 +43,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
   &--sun {
     background: s.$hourly-weather-color-sun;
