@@ -77,29 +77,33 @@ export const WeatherOverview = () => {
       <div className="weather__navigation">
         <button
           className={`weather__button ${
-            activeComponent === "hourly" ? "disabled" : ""
+            activeComponent === "hourly" ? "active" : ""
           }`}
           onClick={handleHourlyButtonClick}>
-          <span>
-            <FontAwesomeIcon
-              className="weather__angle-left-icon"
-              icon={"angle-left"}
-            />
-          </span>
+          {activeComponent !== "hourly" && (
+            <span>
+              <FontAwesomeIcon
+                className="weather__angle-left-icon"
+                icon={"angle-left"}
+              />
+            </span>
+          )}
           Hourly
         </button>
         <button
           className={`weather__button ${
-            activeComponent === "daily" ? "disabled" : ""
+            activeComponent === "daily" ? "active" : ""
           }`}
           onClick={handleSevenDaysButtonClick}>
           7-days
-          <span>
-            <FontAwesomeIcon
-              className="weather__angle-right-icon"
-              icon={"angle-right"}
-            />
-          </span>
+          {activeComponent !== "daily" && (
+            <span>
+              <FontAwesomeIcon
+                className="weather__angle-right-icon"
+                icon={"angle-right"}
+              />
+            </span>
+          )}
         </button>
       </div>
       {activeComponent === "hourly" && <HourlyForecastSlider />}
