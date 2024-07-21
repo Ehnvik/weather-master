@@ -9,7 +9,7 @@ import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import "./DailyForecastSlider.scss";
+import "./HourlyForecastSlider.scss";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useEffect, useRef, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";

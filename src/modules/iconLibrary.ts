@@ -7,6 +7,8 @@ import {
   faLocationDot,
   faArrowAltCircleRight,
   faArrowCircleLeft,
+  faAngleRight,
+  faAngleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -18,6 +20,8 @@ library.add(
   faLocationDot,
   faArrowAltCircleRight,
   faArrowCircleLeft,
+  faAngleLeft,
+  faAngleRight,
 );
 
 export { FontAwesomeIcon };

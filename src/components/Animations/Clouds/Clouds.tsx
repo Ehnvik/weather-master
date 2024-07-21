@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Clouds.scss";
 import { IClouds } from "../../../models/Weather/Interfaces/IClouds";
 import {
@@ -9,27 +9,37 @@ import {
 
 export const Clouds = () => {
   const [clouds, setClouds] = useState<IClouds[]>([]);
-  const [cloudAmount, setCloudAmount] = useState<number>(0);
+  const cloudAmountRef = useRef(0);
+  const lastCloudCreationTimeRef = useRef<number>(0);
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     setClouds(calculateCloudStyles(5));
 
-    const cloudInterval = setInterval(() => {
-      setCloudAmount((prevCloudAmount) => prevCloudAmount + 1);
-    }, 10000);
+    const createNewCloud = () => {
+      const now = Date.now();
+      if (now - lastCloudCreationTimeRef.current >= 10000) {
+        lastCloudCreationTimeRef.current = now;
+        cloudAmountRef.current += 1;
 
-    return () => clearInterval(cloudInterval);
+        let { widthAndHeight, top, duration } = generateRandomCloudProperties();
+
+        const newCloud = createCloud(110, top, widthAndHeight, duration);
+
+        setClouds((prevClouds) => [...prevClouds, newCloud]);
+      }
+
+      animationFrameRef.current = requestAnimationFrame(createNewCloud);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(createNewCloud);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
   }, []);
-
-  useEffect(() => {
-    if (cloudAmount > 0) {
-      let { widthAndHeight, top, duration } = generateRandomCloudProperties();
-
-      const newCloud = createCloud(110, top, widthAndHeight, duration);
-
-      setClouds((prevClouds) => [...prevClouds, newCloud]);
-    }
-  }, [cloudAmount]);
 
   const handleOnAnimationEnd = (cloudId: string) => {
     setClouds((prevClouds) =>
