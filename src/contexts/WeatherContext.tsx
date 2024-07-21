@@ -93,8 +93,6 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
     const getWeatherData = async () => {
       if (location.lat !== "" && location.lon !== "") {
         const response = await fetchWeatherData(location.lat, location.lon);
-        console.log(response);
-
         setWeatherData(response);
       }
     };

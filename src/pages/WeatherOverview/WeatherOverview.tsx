@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./WeatherOverview.scss";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useLocation } from "../../contexts/LocationContext";
@@ -6,9 +6,12 @@ import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { WeatherDetails } from "../../components/WeatherDetails/WeatherDetails";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DailyForecastSlider } from "../../components/HourlyForecastSlider/HourlyForecastSlider";
+import { HourlyForecastSlider } from "../../components/HourlyForecastSlider/HourlyForecastSlider";
+import { DailyForecastSlider } from "../../components/DailyForecastSlider/DailyForecastSlider";
 
 export const WeatherOverview = () => {
+  const [activeComponent, setActiveComponent] = useState<string>("hourly");
+
   const { getLocation, weatherLocationData } = useWeather();
   const { currentLocation: currentPosition, selectedLocation } = useLocation();
 
@@ -24,6 +27,14 @@ export const WeatherOverview = () => {
       getLocation(geolocation);
     }
   }, [id, geolocation]);
+
+  const handleHourlyButtonClick = () => {
+    setActiveComponent("hourly");
+  };
+
+  const handleSevenDaysButtonClick = () => {
+    setActiveComponent("daily");
+  };
 
   return (
     <div className="weather">
@@ -64,20 +75,35 @@ export const WeatherOverview = () => {
         <WeatherDetails weatherLocationData={weatherLocationData} />
       </div>
       <div className="weather__navigation">
-        <button className="weather__today-button">
+        <button
+          className={`weather__button ${
+            activeComponent === "hourly" ? "disabled" : ""
+          }`}
+          onClick={handleHourlyButtonClick}>
           <span>
-            <FontAwesomeIcon icon={"angle-left"} />
+            <FontAwesomeIcon
+              className="weather__angle-left-icon"
+              icon={"angle-left"}
+            />
           </span>
-          Today
+          Hourly
         </button>
-        <button className="weather__seven-days-button">
+        <button
+          className={`weather__button ${
+            activeComponent === "daily" ? "disabled" : ""
+          }`}
+          onClick={handleSevenDaysButtonClick}>
           7-days
           <span>
-            <FontAwesomeIcon icon={"angle-right"} />
+            <FontAwesomeIcon
+              className="weather__angle-right-icon"
+              icon={"angle-right"}
+            />
           </span>
         </button>
       </div>
-      <DailyForecastSlider />
+      {activeComponent === "hourly" && <HourlyForecastSlider />}
+      {activeComponent === "daily" && <DailyForecastSlider />}
     </div>
   );
 };
