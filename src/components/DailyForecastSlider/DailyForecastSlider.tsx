@@ -11,17 +11,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./DailyForecastSlider.scss";
 import { useWeather } from "../../contexts/WeatherContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import { images } from "../../modules/images";
 import { IHourlyWeather } from "../../models/Weather/Interfaces/IHourlyWeather";
 import { HourlyWeather } from "../../models/Weather/Classes/HourlyWeather";
+import { useLocation } from "react-router-dom";
+import SwiperCore from "swiper";
 
 export const DailyForecastSlider = () => {
   const [hourlyWeatherList, setHourlyWeatherList] = useState<HourlyWeather[]>(
     [],
   );
   const { weatherLocationData } = useWeather();
+  const swiperRef = useRef<SwiperCore | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const hourlyWeatherList: HourlyWeather[] = [];
@@ -38,6 +42,16 @@ export const DailyForecastSlider = () => {
     }
     setHourlyWeatherList(hourlyWeatherList);
   }, [weatherLocationData]);
+
+  useEffect(() => {
+    const resetSwiper = () => {
+      if (swiperRef.current) {
+        swiperRef.current.slideTo(0);
+      }
+    };
+
+    resetSwiper();
+  }, [location]);
 
   const backgroundClass = () => {
     return weatherLocationData.icon.id === "01d" ||
@@ -108,7 +122,10 @@ export const DailyForecastSlider = () => {
           prevEl: ".arrow-left",
         }}
         modules={[EffectCoverflow, Pagination, Navigation]}
-        className="swiper-wrapper">
+        className="swiper-wrapper"
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}>
         {displayHourlyWeatherList}
       </Swiper>
       <div className="arrow-container">
