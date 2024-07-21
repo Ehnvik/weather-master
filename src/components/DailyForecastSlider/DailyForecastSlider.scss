@@ -32,6 +32,11 @@
 .arrow {
   font-size: 25px;
   cursor: pointer;
+  transition: all ease 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .swiper-pagination-bullet-active {
