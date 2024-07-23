@@ -10,7 +10,7 @@ app.use(
   }),
 );
 
-app.use("/", router);
+app.use("/api", router);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
