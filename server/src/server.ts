@@ -1,10 +1,10 @@
 import app from "./app";
-import PORT from "./config/dotenvConfig";
+import config from "./config/dotenvConfig";
 
 const run = () => {
   try {
-    app.listen(PORT, () => {
-      console.log(`Server is listening on http://localhost:${PORT}`);
+    app.listen(config.PORT, () => {
+      console.log(`Server is listening on http://localhost:${config.PORT}`);
     });
   } catch (error) {
     console.error(error);
