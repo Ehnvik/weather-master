@@ -1,5 +1,5 @@
 import app from "./app";
-import { PORT } from "./config/dotenvConfig";
+import PORT from "./config/dotenvConfig";
 
 const run = () => {
   try {
