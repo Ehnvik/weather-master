@@ -38,13 +38,13 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   );
 
   const [weatherIcon, setWeatherIcon] = useState<IWeatherIcon>(() => {
-    const data = localStorage.getItem("weatherIcon");
+    const data = sessionStorage.getItem("weatherIcon");
     return data ? JSON.parse(data) : initialWeatherIcon;
   });
 
   const [weatherLocationData, setWeatherLocationData] =
     useState<WeatherLocationData>(() => {
-      const data = localStorage.getItem("weatherLocationData");
+      const data = sessionStorage.getItem("weatherLocationData");
       return data ? JSON.parse(data) : initialWeatherLocationData;
     });
 
@@ -54,17 +54,17 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
     setLocation(location);
   };
 
-  const sendWeatherLocationDataToLocalStorage = (
+  const sendWeatherLocationDataToSessionStorage = (
     weatherLocationData: WeatherLocationData,
   ) => {
-    localStorage.setItem(
+    sessionStorage.setItem(
       "weatherLocationData",
       JSON.stringify(weatherLocationData),
     );
   };
 
-  const sendWeatherIconToLocalStorage = (weatherIcon: IWeatherIcon) => {
-    localStorage.setItem("weatherIcon", JSON.stringify(weatherIcon));
+  const sendWeatherIconToSessionStorage = (weatherIcon: IWeatherIcon) => {
+    sessionStorage.setItem("weatherIcon", JSON.stringify(weatherIcon));
   };
 
   useEffect(() => {
@@ -76,8 +76,8 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
         weatherIcon,
       );
       setWeatherLocationData(weatherLocationData);
-      sendWeatherLocationDataToLocalStorage(weatherLocationData);
-      sendWeatherIconToLocalStorage(weatherIcon);
+      sendWeatherLocationDataToSessionStorage(weatherLocationData);
+      sendWeatherIconToSessionStorage(weatherIcon);
     }
   }, [weatherData, weatherIcon, formattedUnits]);
 

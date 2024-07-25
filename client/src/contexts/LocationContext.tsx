@@ -98,9 +98,11 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
 
   useEffect(() => {
     const getLocationsData = async () => {
-      const response = await fetchLocationsByName(debouncedValue);
-      const locationsList = createLocationDetailsList(response);
-      setLocations(locationsList);
+      if (debouncedValue !== "") {
+        const response = await fetchLocationsByName(debouncedValue);
+        const locationsList = createLocationDetailsList(response);
+        setLocations(locationsList);
+      }
     };
 
     getLocationsData();

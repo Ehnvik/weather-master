@@ -1,4 +1,4 @@
-import { IDailyWeather } from "../../models/Weather/IDailyWeather";
+import { IDailyWeather } from "../../models/Weather/Interfaces/IDailyWeather";
 
 export const initialDailyWeather: IDailyWeather[] = [
   {

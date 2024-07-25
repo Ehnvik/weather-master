@@ -20,11 +20,14 @@ export const HourlyForecastSlider = () => {
 
   useEffect(() => {
     const hourlyWeatherList: HourlyWeather[] = [];
-    for (let i = 0; i < 12; i++) {
-      const hourlyWeather = weatherLocationData.weatherData.hourly[i];
-      const time = convertUnixTime(hourlyWeather, i);
-      const icon = findCorrectWeatherIcon(hourlyWeather.weather[0].icon);
-      const temp = formatHourlyWeatherTemp(hourlyWeather);
+    const hourlyWeather = sliceHourlyWeather(
+      weatherLocationData.weatherData.hourly,
+    );
+
+    for (let i = 0; i < hourlyWeather.length; i++) {
+      const time = convertUnixTime(hourlyWeather[i], i);
+      const icon = findCorrectWeatherIcon(hourlyWeather[i].weather[0].icon);
+      const temp = formatHourlyWeatherTemp(hourlyWeather[i]);
       if (icon) {
         hourlyWeatherList.push(
           new HourlyWeather(`${Date.now()}-${Math.random()}`, temp, icon, time),
@@ -33,6 +36,10 @@ export const HourlyForecastSlider = () => {
     }
     setHourlyWeatherList(hourlyWeatherList);
   }, [weatherLocationData]);
+
+  const sliceHourlyWeather = (hourlyWeather: IHourlyWeather[]) => {
+    return hourlyWeather.slice(0, 12);
+  };
 
   const backgroundClass = () => {
     return weatherLocationData.icon.id === "01d" ||

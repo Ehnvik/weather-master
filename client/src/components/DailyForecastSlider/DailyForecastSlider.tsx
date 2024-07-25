@@ -20,18 +20,25 @@ export const DailyForecastSlider = () => {
 
   useEffect(() => {
     const dailyWeatherList: DailyWeather[] = [];
-    for (let i = 0; i < weatherLocationData.weatherData.daily.length; i++) {
-      const dailyWeather = weatherLocationData.weatherData.daily[i];
+    const dailyWeather = sliceDailyWeather(
+      weatherLocationData.weatherData.daily,
+    );
+
+    for (let i = 0; i < dailyWeather.length; i++) {
       const id = `${Date.now()}-${Math.random()}`;
-      const day = convertUnixTime(dailyWeather, i);
-      const icon = findCorrectWeatherIcon(dailyWeather.weather[0].icon);
-      const temp = formatDailyWeatherTemp(dailyWeather);
+      const day = convertUnixTime(dailyWeather[i], i);
+      const icon = findCorrectWeatherIcon(dailyWeather[i].weather[0].icon);
+      const temp = formatDailyWeatherTemp(dailyWeather[i]);
       if (icon) {
         dailyWeatherList.push(new DailyWeather(id, day, icon, temp));
       }
     }
     setHourlyWeatherList(dailyWeatherList);
   }, [weatherLocationData]);
+
+  const sliceDailyWeather = (dailyWeather: IDailyWeather[]) => {
+    return dailyWeather.slice(1, 8);
+  };
 
   const backgroundClass = () => {
     return weatherLocationData.icon.id === "01d" ||
@@ -41,16 +48,12 @@ export const DailyForecastSlider = () => {
   };
 
   const convertUnixTime = (dailyWeather: IDailyWeather, index: number) => {
-    if (index === 0) {
-      return "Today";
-    } else {
-      const date = new Date(dailyWeather.dt * 1000);
-      return formatInTimeZone(
-        date,
-        weatherLocationData.weatherData.timezone,
-        "EEE",
-      );
-    }
+    const date = new Date(dailyWeather.dt * 1000);
+    return formatInTimeZone(
+      date,
+      weatherLocationData.weatherData.timezone,
+      "EEE",
+    );
   };
 
   const findCorrectWeatherIcon = (icon: string) => {

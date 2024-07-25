@@ -1,4 +1,4 @@
-import { IHourlyWeather } from "../../models/Weather/IHourlyWeather";
+import { IHourlyWeather } from "../../models/Weather/Interfaces/IHourlyWeather";
 
 export const initialHourlyWeather: IHourlyWeather[] = [
   {

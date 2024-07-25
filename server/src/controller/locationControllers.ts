@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   fetchLocationByCoordinates,
   fetchLocationsByName,
-} from "../services/locationservice";
+} from "../services/locationService";
 
 export const getLocationsByName = async (req: Request, res: Response) => {
   const { city } = req.query;
