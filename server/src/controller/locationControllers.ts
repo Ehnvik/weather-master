@@ -12,7 +12,7 @@ export const getLocationsByName = async (req: Request, res: Response) => {
   try {
     const locations = await fetchLocationsByName(city as string);
     if (!locations || locations.length === 0) {
-      return res.status(404).json({ error: "No locations found" });
+      return res.json([]);
     } else {
       return res.json(locations);
     }

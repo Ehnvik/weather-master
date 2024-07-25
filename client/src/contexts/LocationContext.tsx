@@ -26,6 +26,7 @@ interface ILocationContext {
   resetSearchResults: () => void;
   setSelectedLocation: (location: LocationDetails) => void;
   selectedLocation: LocationDetails;
+  noLocationsMessage: string;
 }
 
 interface ILocationProviderProps {
@@ -46,6 +47,7 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   );
   const [currentLocation, setCurrentLocation] =
     useState<IGeolocationResponse>(initialGeolocation);
+  const [noLocationsMessage, setNoLocationsMessage] = useState<string>("");
 
   const { currentGeolocation, requestGeolocation } = useGeolocation();
 
@@ -100,8 +102,18 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     const getLocationsData = async () => {
       if (debouncedValue !== "") {
         const response = await fetchLocationsByName(debouncedValue);
-        const locationsList = createLocationDetailsList(response);
-        setLocations(locationsList);
+        if ("error" in response) {
+          setNoLocationsMessage(response.message);
+        } else if (response.length === 0) {
+          setNoLocationsMessage("No locations found");
+          setLocations([]);
+          setDebouncedValue("");
+        } else {
+          const locationsList = createLocationDetailsList(response);
+          setNoLocationsMessage("");
+          setLocations(locationsList);
+          setDebouncedValue("");
+        }
       }
     };
 
@@ -118,6 +130,7 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
         resetSearchResults,
         setSelectedLocation,
         selectedLocation,
+        noLocationsMessage,
       }}>
       {children}
     </LocationsContext.Provider>

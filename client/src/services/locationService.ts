@@ -1,10 +1,11 @@
 import { ILocationsResponse } from "../models/Location/Interfaces/ILocationsResponse";
 import { IGeolocationResponse } from "../models/Location/Interfaces/IGeolocationResponse";
 import { axiosInstance } from "./axiosInstance";
+import { IErrorResponse } from "../models/error/IErrorResponse";
 
 export const fetchLocationsByName = async (
   searchValue: string,
-): Promise<ILocationsResponse[]> => {
+): Promise<ILocationsResponse[] | IErrorResponse> => {
   try {
     const response = await axiosInstance.get<ILocationsResponse[]>(
       "location/name",
@@ -17,8 +18,10 @@ export const fetchLocationsByName = async (
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching weather location", error);
-    throw error;
+    return {
+      error: true,
+      message: "An error occurred while fetching locations",
+    };
   }
 };
 

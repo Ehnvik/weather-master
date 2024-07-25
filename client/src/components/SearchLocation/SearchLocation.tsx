@@ -21,6 +21,7 @@ export const SearchLocation = () => {
     setSearchValue: setSearchLocation,
     resetSearchResults,
     setSelectedLocation,
+    noLocationsMessage,
   } = useLocation();
 
   const [locationHistory, setLocationHistory] = useState<LocationDetails[]>(
@@ -185,7 +186,13 @@ export const SearchLocation = () => {
             {searchHistory}
           </>
         )}
-        {searchValue !== "" && searchResults}
+        {searchValue !== "" && searchResults.length > 0
+          ? searchResults
+          : searchValue.length >= 3 && (
+              <p className="search__no-locations-message">
+                {noLocationsMessage}
+              </p>
+            )}
       </div>
     </div>
   );
