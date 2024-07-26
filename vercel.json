@@ -13,7 +13,7 @@
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "client/dist/$1" },
-    { "src": "/api/(.*)", "dest": "server/src/$1" }
+    { "src": "/api/(.*)", "dest": "server/src/$1" },
+    { "src": "/(.*)", "dest": "client/dist/$1" }
   ]
 }
