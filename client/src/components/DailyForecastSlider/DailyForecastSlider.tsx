@@ -26,7 +26,7 @@ export const DailyForecastSlider = () => {
 
     for (let i = 0; i < dailyWeather.length; i++) {
       const id = `${Date.now()}-${Math.random()}`;
-      const day = convertUnixTime(dailyWeather[i], i);
+      const day = convertUnixTime(dailyWeather[i]);
       const icon = findCorrectWeatherIcon(dailyWeather[i].weather[0].icon);
       const temp = formatDailyWeatherTemp(dailyWeather[i]);
       if (icon) {
@@ -47,7 +47,7 @@ export const DailyForecastSlider = () => {
       : `daily-weather--clouds`;
   };
 
-  const convertUnixTime = (dailyWeather: IDailyWeather, index: number) => {
+  const convertUnixTime = (dailyWeather: IDailyWeather) => {
     const date = new Date(dailyWeather.dt * 1000);
     return formatInTimeZone(
       date,

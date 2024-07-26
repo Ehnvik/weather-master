@@ -106,12 +106,10 @@ export const SearchLocation = () => {
   }, [locations]);
 
   useEffect(() => {
-    if (searchResultsRef.current && searchResultsRef.current[selectedIndex]) {
-      searchResultsRef.current[selectedIndex].scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
-    }
+    searchResultsRef.current?.[selectedIndex]?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   }, [selectedIndex]);
 
   useEffect(() => {
