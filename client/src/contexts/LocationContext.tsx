@@ -27,6 +27,7 @@ interface ILocationContext {
   setSelectedLocation: (location: LocationDetails) => void;
   selectedLocation: LocationDetails;
   noLocationsMessage: string;
+  isLoading: boolean;
 }
 
 interface ILocationProviderProps {
@@ -48,6 +49,7 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   const [currentLocation, setCurrentLocation] =
     useState<IGeolocationResponse>(initialGeolocation);
   const [noLocationsMessage, setNoLocationsMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { currentGeolocation, requestGeolocation } = useGeolocation();
 
@@ -55,6 +57,8 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     setLocations([]);
     setSearchValue("");
     setDebouncedValue("");
+    setNoLocationsMessage("");
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -99,6 +103,12 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   }, [searchValue]);
 
   useEffect(() => {
+    if (searchValue.length >= 3) {
+      setIsLoading(true);
+    }
+  }, [searchValue]);
+
+  useEffect(() => {
     const getLocationsData = async () => {
       if (debouncedValue !== "") {
         const response = await fetchLocationsByName(debouncedValue);
@@ -112,8 +122,9 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
           const locationsList = createLocationDetailsList(response);
           setNoLocationsMessage("");
           setLocations(locationsList);
-          setDebouncedValue("");
         }
+        setDebouncedValue("");
+        setIsLoading(false);
       }
     };
 
@@ -131,6 +142,7 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
         setSelectedLocation,
         selectedLocation,
         noLocationsMessage,
+        isLoading,
       }}>
       {children}
     </LocationsContext.Provider>

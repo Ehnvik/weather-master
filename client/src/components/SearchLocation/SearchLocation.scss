@@ -79,7 +79,8 @@
     max-width: 350px;
   }
 
-  &__no-locations-message {
+  &__no-locations-message,
+  &__loading-message {
     margin: 0;
     font-weight: 500;
     padding: 25px 0;

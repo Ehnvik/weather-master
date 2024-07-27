@@ -22,6 +22,7 @@ export const SearchLocation = () => {
     resetSearchResults,
     setSelectedLocation,
     noLocationsMessage,
+    isLoading,
   } = useLocation();
 
   const [locationHistory, setLocationHistory] = useState<LocationDetails[]>(
@@ -184,13 +185,18 @@ export const SearchLocation = () => {
             {searchHistory}
           </>
         )}
-        {searchValue !== "" && searchResults.length > 0
-          ? searchResults
-          : searchValue.length >= 3 && (
-              <p className="search__no-locations-message">
-                {noLocationsMessage}
-              </p>
-            )}
+        {isLoading ? (
+          <p className="search__loading-message">Loading...</p>
+        ) : (
+          searchValue !== "" &&
+          (searchResults.length > 0
+            ? searchResults
+            : searchValue.length >= 3 && (
+                <p className="search__no-locations-message">
+                  {noLocationsMessage}
+                </p>
+              ))
+        )}
       </div>
     </div>
   );
