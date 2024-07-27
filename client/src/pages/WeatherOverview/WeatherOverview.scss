@@ -107,7 +107,6 @@
 
   &__button {
     background-color: rgba(250, 250, 250, 0.5);
-    padding: 10px;
     border-radius: 50px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 0;
@@ -115,6 +114,8 @@
     color: s.$primaryColor;
     font-weight: 600;
     font-size: 16px;
+    width: 85px;
+    height: 40px;
     cursor: pointer;
     transition: all ease 0.2s;
 
