@@ -7,7 +7,9 @@
   @include s.move-left-keyframes();
 
   &__img {
-    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
     opacity: 0.8;
+    @include s.mobile {
+      filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
+    }
   }
 }

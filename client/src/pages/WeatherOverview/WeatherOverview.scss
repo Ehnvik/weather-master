@@ -70,8 +70,11 @@
       max-width: 160px;
       max-height: 160px;
       z-index: 2;
-      filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
       margin-top: 10px;
+
+      @include s.mobile {
+        filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+      }
     }
 
     &__temp {

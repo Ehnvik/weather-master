@@ -2,6 +2,12 @@
 
 // Breakpoints
 
+@mixin mobile {
+  @media screen and (min-width: bp.$breakPoint-mobile) {
+    @content;
+  }
+}
+
 @mixin navbar {
   @media screen and (min-width: bp.$breakPoint-navbar) {
     @content;
