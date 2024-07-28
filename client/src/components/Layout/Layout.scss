@@ -6,8 +6,6 @@ body {
   height: 100%;
   font-family: s.$primaryFont;
   background-image: s.$primaryBgColor;
-  background-size: cover;
-  background-position: center;
   overflow: hidden;
 }
 
@@ -29,8 +27,6 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
 
   &--sun {
     @include s.weather-background(s.$background-color-sun);
