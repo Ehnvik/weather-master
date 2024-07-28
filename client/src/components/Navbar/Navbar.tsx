@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Navbar.scss";
 import logo from "../../assets/weather-logo.png";
 import { FontAwesomeIcon } from "../../modules/iconLibrary";
@@ -8,15 +8,34 @@ import { useLocation } from "../../contexts/LocationContext";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useWeatherBackground } from "../../hooks/useWeatherBackground";
+import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { setSearchValue, getCurrentLocation } = useLocation();
-  const { weatherIcon } = useWeather();
+  const {
+    setSearchValue,
+    getCurrentLocation,
+    currentLocation: currentPosition,
+    selectedLocation,
+  } = useLocation();
+  const { weatherIcon, getLocation } = useWeather();
   const { backgroundClass } = useWeatherBackground(
     weatherIcon,
     "navbar__search-container",
   );
+
+  const { geolocation } = useCurrentLocation(currentPosition);
+  const { id } = useParams();
+
+  const handleRefreshWeatherButton = () => {
+    if (id) {
+      if (selectedLocation.id.toString() === id) {
+        getLocation(selectedLocation);
+      }
+    } else {
+      getLocation(geolocation);
+    }
+  };
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
@@ -51,9 +70,16 @@ export const Navbar = () => {
           <img className="navbar__logo" src={logo} alt="Weather Master Logo" />
         </Link>
 
-        <button className="navbar__toggle" onClick={toggleSearchContainer}>
-          <FontAwesomeIcon className="navbar__search-icon" icon={"search"} />
-        </button>
+        <div className="navbar__refresh-search-container">
+          <button
+            className="navbar__refresh-weather"
+            onClick={handleRefreshWeatherButton}>
+            <FontAwesomeIcon icon={"rotate"} />
+          </button>
+          <button className="navbar__toggle" onClick={toggleSearchContainer}>
+            <FontAwesomeIcon className="navbar__search-icon" icon={"search"} />
+          </button>
+        </div>
       </div>
 
       <div

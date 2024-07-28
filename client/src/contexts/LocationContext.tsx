@@ -101,12 +101,6 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     };
 
     getGeolocationData();
-
-    const interval = setInterval(() => {
-      getCurrentLocation();
-    }, 60000);
-
-    return () => clearInterval(interval);
   }, [coordinates]);
 
   useEffect(() => {
