@@ -27,7 +27,10 @@
   &__refresh-search-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+
+    @include s.small {
+      gap: 5px;
+    }
   }
 
   &__refresh-weather {
