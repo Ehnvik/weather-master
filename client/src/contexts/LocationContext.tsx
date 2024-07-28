@@ -11,23 +11,25 @@ import {
   fetchLocationByCoordinates,
   fetchLocationsByName,
 } from "../services/locationService";
-import { useGeolocation } from "../hooks/useGeolocation";
 import { ILocationCoordinates } from "../models/Location/Interfaces/ILocationCoordinates";
 import { IGeolocationResponse } from "../models/Location/Interfaces/IGeolocationResponse";
 import { initialGeolocation } from "../initialValues/location/initialGeolocation";
 import { initialLocationDetails } from "../initialValues/location/initialLocationDetails";
+import { initialLocationCoordinates } from "../initialValues/location/initialLocationCoordinates";
+import { requestGeolocation } from "../utils/geolocationHelpers";
+import Cookies from "js-cookie";
 
 interface ILocationContext {
   locations: LocationDetails[];
   setSearchValue: (searchValue: string) => void;
   searchValue: string;
   currentLocation: IGeolocationResponse;
-  requestGeolocation: () => void;
   resetSearchResults: () => void;
   setSelectedLocation: (location: LocationDetails) => void;
   selectedLocation: LocationDetails;
   noLocationsMessage: string;
   isLoading: boolean;
+  getCurrentLocation: () => void;
 }
 
 interface ILocationProviderProps {
@@ -43,15 +45,14 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [locations, setLocations] = useState<LocationDetails[]>([]);
   const [debouncedValue, setDebouncedValue] = useState<string>("");
-  const [coordinates, setCoordinates] = useState<ILocationCoordinates | null>(
-    null,
-  );
+  const [coordinates, setCoordinates] = useState<ILocationCoordinates>(() => {
+    const geolocation = localStorage.getItem("userGeolocation");
+    return geolocation ? JSON.parse(geolocation) : initialLocationCoordinates;
+  });
   const [currentLocation, setCurrentLocation] =
     useState<IGeolocationResponse>(initialGeolocation);
   const [noLocationsMessage, setNoLocationsMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const { currentGeolocation, requestGeolocation } = useGeolocation();
 
   const resetSearchResults = () => {
     setLocations([]);
@@ -67,11 +68,25 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     }
   }, [searchValue]);
 
-  useEffect(() => {
-    if (currentGeolocation) {
-      setCoordinates(currentGeolocation);
+  const handleGeolocationSuccess = (location: ILocationCoordinates) => {
+    setCoordinates(location);
+    localStorage.setItem("userGeolocation", JSON.stringify(location));
+  };
+
+  const handleGeolocationError = (defaultLocation: ILocationCoordinates) => {
+    setCoordinates(defaultLocation);
+    localStorage.setItem("userGeolocation", JSON.stringify(defaultLocation));
+  };
+
+  const getCurrentLocation = () => {
+    const geolocationConsent = Cookies.get("geolocationConsent");
+
+    if (geolocationConsent === "declined") {
+      return;
     }
-  }, [currentGeolocation]);
+
+    requestGeolocation(handleGeolocationSuccess, handleGeolocationError);
+  };
 
   useEffect(() => {
     const getGeolocationData = async () => {
@@ -86,6 +101,12 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
     };
 
     getGeolocationData();
+
+    const interval = setInterval(() => {
+      getCurrentLocation();
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, [coordinates]);
 
   useEffect(() => {
@@ -137,12 +158,12 @@ export const LocationProvider = ({ children }: ILocationProviderProps) => {
         setSearchValue,
         searchValue,
         currentLocation,
-        requestGeolocation,
         resetSearchResults,
         setSelectedLocation,
         selectedLocation,
         noLocationsMessage,
         isLoading,
+        getCurrentLocation,
       }}>
       {children}
     </LocationsContext.Provider>

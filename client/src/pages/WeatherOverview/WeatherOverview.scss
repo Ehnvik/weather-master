@@ -121,6 +121,7 @@
     height: 40px;
     cursor: pointer;
     transition: all ease 0.2s;
+    font-family: s.$primaryFont;
 
     &:hover {
       transform: scale(1.1);

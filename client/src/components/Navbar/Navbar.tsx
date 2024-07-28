@@ -11,12 +11,13 @@ import { useWeatherBackground } from "../../hooks/useWeatherBackground";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { requestGeolocation, setSearchValue } = useLocation();
+  const { setSearchValue, getCurrentLocation } = useLocation();
   const { weatherIcon } = useWeather();
   const { backgroundClass } = useWeatherBackground(
     weatherIcon,
     "navbar__search-container",
   );
+
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleSearchContainer = () => {
@@ -46,7 +47,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar__container">
-        <Link onClick={requestGeolocation} to={"/"}>
+        <Link onClick={getCurrentLocation} to={"/"}>
           <img className="navbar__logo" src={logo} alt="Weather Master Logo" />
         </Link>
 

@@ -1,0 +1,105 @@
+@use "../../styles/index" as s;
+
+.geolocation-prompt {
+  background: linear-gradient(to right, #e1e9e9, #a5d7e8);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 18px;
+  position: absolute;
+  width: 80%;
+  min-width: 300px;
+  max-width: 420px;
+  height: 160px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: -200px;
+
+  &--visible {
+    animation: slide-down 2s forwards, fade-in 2s forwards;
+    animation-delay: 5s;
+  }
+
+  &--hidden {
+    display: block;
+    pointer-events: none;
+    inset: 0;
+    animation: slide-up 2s forwards, fade-out 2s forwards;
+  }
+
+  &__icon {
+    font-size: x-large;
+    color: s.$primaryColor;
+  }
+
+  &__question {
+    width: 90%;
+    text-align: center;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+
+  &__answer {
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+
+    &--buttons {
+      width: 100px;
+      height: 40px;
+      border: none;
+      border-radius: 18px;
+      font-size: 16px;
+      font-family: s.$primaryFont;
+      color: s.$primaryColor;
+      font-weight: 500;
+      cursor: pointer;
+
+      @include s.small {
+        transition: all 0.2s ease;
+        &:hover {
+          color: #fafafa;
+          background-color: s.$primaryColor;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(calc(100% + 200px));
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(-300%);
+  }
+}
