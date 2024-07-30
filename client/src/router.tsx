@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import { NavLayout } from "./components/NavLayout/NavLayout";
+import { App } from "./components/Layouts/App/App";
 import { WeatherOverview } from "./pages/WeatherOverview/WeatherOverview";
 
 export const router = createBrowserRouter([
   {
-    element: <NavLayout />,
+    element: <App />,
     children: [
       {
         path: "/",

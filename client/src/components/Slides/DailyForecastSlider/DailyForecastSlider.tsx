@@ -5,13 +5,13 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import "./DailyForecastSlider.scss";
-import { useWeather } from "../../contexts/WeatherContext";
+import { useWeather } from "../../../contexts/WeatherContext";
 import { useEffect, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
-import { images } from "../../modules/images";
-import { DailyWeather } from "../../models/Weather/Classes/DailyWeather";
-import { IDailyWeather } from "../../models/Weather/Interfaces/IDailyWeather";
-import { IHighLowTemp } from "../../models/Weather/Interfaces/IHighLowTemp";
+import { images } from "../../../modules/images";
+import { DailyWeather } from "../../../models/Weather/Classes/DailyWeather";
+import { IDailyWeather } from "../../../models/Weather/Interfaces/IDailyWeather";
+import { IHighLowTemp } from "../../../models/Weather/Interfaces/IHighLowTemp";
 import { CustomSwiper } from "../CustomSwiper/CustomSwiper";
 
 export const DailyForecastSlider = () => {

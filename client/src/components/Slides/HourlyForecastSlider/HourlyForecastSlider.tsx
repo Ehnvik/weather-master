@@ -4,13 +4,13 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./HourlyForecastSlider.scss";
-import { useWeather } from "../../contexts/WeatherContext";
+import { useWeather } from "../../../contexts/WeatherContext";
 import { useEffect, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
-import { images } from "../../modules/images";
-import { IHourlyWeather } from "../../models/Weather/Interfaces/IHourlyWeather";
-import { HourlyWeather } from "../../models/Weather/Classes/HourlyWeather";
-import { CustomSwiper } from "../CustomSwiper/CustomSwiper";
+import { images } from "../../../modules/images";
+import { IHourlyWeather } from "../../../models/Weather/Interfaces/IHourlyWeather";
+import { HourlyWeather } from "../../../models/Weather/Classes/HourlyWeather";
+import { CustomSwiper } from "../../Slides/CustomSwiper/CustomSwiper";
 
 export const HourlyForecastSlider = () => {
   const [hourlyWeatherList, setHourlyWeatherList] = useState<HourlyWeather[]>(

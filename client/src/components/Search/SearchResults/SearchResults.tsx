@@ -1,4 +1,4 @@
-import { LocationDetails } from "../../models/Location/Classes/LocationDetails";
+import { LocationDetails } from "../../../models/Location/Classes/LocationDetails";
 import "./SearchResults.scss";
 import { forwardRef, ReactNode } from "react";
 

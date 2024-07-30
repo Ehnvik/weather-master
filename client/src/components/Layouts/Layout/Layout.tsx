@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useWeather } from "../../contexts/WeatherContext";
-import { useWeatherBackground } from "../../hooks/useWeatherBackground";
-import { Airplane } from "../Animations/Airplane/Airplane";
-import { Clouds } from "../Animations/Clouds/Clouds";
-import { GeolocationPrompt } from "../GeolocationPrompt/GeolocationPrompt";
+import { useWeather } from "../../../contexts/WeatherContext";
+import { useWeatherBackground } from "../../../hooks/useWeatherBackground";
+import { Airplane } from "../../Animations/Airplane/Airplane";
+import { Clouds } from "../../Animations/Clouds/Clouds";
+import { GeolocationPrompt } from "../../GeolocationPrompt/GeolocationPrompt";
 import Cookies from "js-cookie";
 import "./Layout.scss";
 

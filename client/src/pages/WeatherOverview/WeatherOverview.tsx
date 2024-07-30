@@ -6,8 +6,8 @@ import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 import { WeatherDetails } from "../../components/WeatherDetails/WeatherDetails";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { HourlyForecastSlider } from "../../components/HourlyForecastSlider/HourlyForecastSlider";
-import { DailyForecastSlider } from "../../components/DailyForecastSlider/DailyForecastSlider";
+import { HourlyForecastSlider } from "../../components/Slides/HourlyForecastSlider/HourlyForecastSlider";
+import { DailyForecastSlider } from "../../components/Slides/DailyForecastSlider/DailyForecastSlider";
 import { ThreeDots } from "react-loader-spinner";
 
 export const WeatherOverview = () => {

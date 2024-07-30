@@ -1,13 +1,13 @@
 import "./SearchLocation.scss";
-import { FontAwesomeIcon } from "../../modules/iconLibrary";
-import { LocationDetails } from "../../models/Location/Classes/LocationDetails";
-import { useLocation } from "../../contexts/LocationContext";
-import { SearchResults } from "../SearchResults/SearchResults";
+import { FontAwesomeIcon } from "../../../modules/iconLibrary";
+import { LocationDetails } from "../../../models/Location/Classes/LocationDetails";
+import { useLocation } from "../../../contexts/LocationContext";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { useSearchContext } from "../../contexts/SearchContext";
-import { useRemoveLocation } from "../../hooks/useRemoveLocation";
 import { useNavigate } from "react-router-dom";
+import { useSearchContext } from "../../../contexts/SearchContext";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
+import { useRemoveLocation } from "../../../hooks/useRemoveLocation";
+import { SearchResults } from "../SearchResults/SearchResults";
 
 export const SearchLocation = () => {
   const { toggleSearchContainer } = useSearchContext();

@@ -3,11 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import "./Navbar.scss";
 import logo from "../../assets/weather-logo.png";
 import { FontAwesomeIcon } from "../../modules/iconLibrary";
-import { SearchLocation } from "../SearchLocation/SearchLocation";
 import { useLocation } from "../../contexts/LocationContext";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useWeatherBackground } from "../../hooks/useWeatherBackground";
+import { SearchLocation } from "../Search/SearchLocation/SearchLocation";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
