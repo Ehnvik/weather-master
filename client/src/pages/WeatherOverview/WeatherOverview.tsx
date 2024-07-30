@@ -8,9 +8,11 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HourlyForecastSlider } from "../../components/HourlyForecastSlider/HourlyForecastSlider";
 import { DailyForecastSlider } from "../../components/DailyForecastSlider/DailyForecastSlider";
+import { ThreeDots } from "react-loader-spinner";
 
 export const WeatherOverview = () => {
   const [activeComponent, setActiveComponent] = useState<string>("hourly");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { getLocation, weatherLocationData } = useWeather();
   const { currentLocation: currentPosition, selectedLocation } = useLocation();
@@ -19,6 +21,8 @@ export const WeatherOverview = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    setIsLoading(true);
+
     if (id) {
       if (selectedLocation.id.toString() === id) {
         getLocation(selectedLocation);
@@ -28,6 +32,14 @@ export const WeatherOverview = () => {
     }
   }, [id, geolocation]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [weatherLocationData]);
+
   const handleHourlyButtonClick = () => {
     setActiveComponent("hourly");
   };
@@ -36,7 +48,17 @@ export const WeatherOverview = () => {
     setActiveComponent("daily");
   };
 
-  return (
+  return isLoading ? (
+    <ThreeDots
+      visible={true}
+      height="100"
+      width="100"
+      radius="9"
+      color="#a5d7e8"
+      ariaLabel="three-circles-loading"
+      wrapperClass="loading-circle"
+    />
+  ) : (
     <div className="weather">
       <div className="weather__info">
         <div className="weather__city-container">

@@ -1,5 +1,3 @@
-// utils/geolocation.ts
-
 import { ILocationCoordinates } from "../models/Location/Interfaces/ILocationCoordinates";
 import { LocationCoordinates } from "../models/Location/Classes/LocationCoordinates";
 
