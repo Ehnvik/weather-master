@@ -56,7 +56,7 @@ export const WeatherOverview = () => {
       radius="9"
       color="#a5d7e8"
       ariaLabel="three-circles-loading"
-      wrapperClass="loading-circle"
+      wrapperClass="loading-spinner"
     />
   ) : (
     <div className="weather">

@@ -1,11 +1,14 @@
 @use "../../styles/index" as s;
 
-.loading-circle {
+.loading-spinner {
   width: 100%;
   margin-top: 150px;
   display: flex;
   justify-content: center;
-  filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+
+  @include s.mobile {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+  }
 }
 
 .weather {
