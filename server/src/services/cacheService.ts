@@ -6,6 +6,6 @@ export const getCachedData = (key: string) => {
   return cache.get(key);
 };
 
-export const setCachedData = (key: string, value: any) => {
-  return cache.set(key, value);
+export const setCachedData = (key: string, value: any, ttl: number = 0) => {
+  return cache.set(key, value, ttl);
 };
