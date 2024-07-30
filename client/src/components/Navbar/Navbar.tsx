@@ -8,23 +8,17 @@ import { useLocation } from "../../contexts/LocationContext";
 import { SearchContext } from "../../contexts/SearchContext";
 import { useWeather } from "../../contexts/WeatherContext";
 import { useWeatherBackground } from "../../hooks/useWeatherBackground";
-import { useCurrentLocation } from "../../hooks/useCurrentLocation";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    setSearchValue,
-    getCurrentLocation,
-    currentLocation: currentPosition,
-    selectedLocation,
-  } = useLocation();
+  const { setSearchValue, getCurrentLocation, selectedLocation } =
+    useLocation();
   const { weatherIcon, getLocation } = useWeather();
   const { backgroundClass } = useWeatherBackground(
     weatherIcon,
     "navbar__search-container",
   );
 
-  const { geolocation } = useCurrentLocation(currentPosition);
   const { id } = useParams();
 
   const handleRefreshWeatherButton = () => {
@@ -33,7 +27,7 @@ export const Navbar = () => {
         getLocation(selectedLocation);
       }
     } else {
-      getLocation(geolocation);
+      getCurrentLocation();
     }
   };
 
