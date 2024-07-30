@@ -13,7 +13,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { setSearchValue, getCurrentLocation, selectedLocation } =
     useLocation();
-  const { weatherIcon, getLocation } = useWeather();
+  const { weatherIcon, refreshWeatherData } = useWeather();
   const { backgroundClass } = useWeatherBackground(
     weatherIcon,
     "navbar__search-container",
@@ -24,7 +24,7 @@ export const Navbar = () => {
   const handleRefreshWeatherButton = () => {
     if (id) {
       if (selectedLocation.id.toString() === id) {
-        getLocation(selectedLocation);
+        refreshWeatherData(selectedLocation);
       }
     } else {
       getCurrentLocation();

@@ -12,9 +12,9 @@ import { ThreeDots } from "react-loader-spinner";
 
 export const WeatherOverview = () => {
   const [activeComponent, setActiveComponent] = useState<string>("hourly");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { getLocation, weatherLocationData } = useWeather();
+  const { getLocation, weatherLocationData, isLoading, setIsLoading } =
+    useWeather();
   const { currentLocation: currentPosition, selectedLocation } = useLocation();
 
   const { geolocation } = useCurrentLocation(currentPosition);
@@ -22,7 +22,6 @@ export const WeatherOverview = () => {
 
   useEffect(() => {
     setIsLoading(true);
-
     if (id) {
       if (selectedLocation.id.toString() === id) {
         getLocation(selectedLocation);
@@ -35,7 +34,7 @@ export const WeatherOverview = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [weatherLocationData]);

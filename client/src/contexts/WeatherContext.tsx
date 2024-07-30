@@ -21,6 +21,9 @@ interface IWeatherContext {
   getLocation: (location: LocationDetails) => void;
   weatherIcon: IWeatherIcon;
   weatherLocationData: WeatherLocationData;
+  refreshWeatherData: (location: LocationDetails) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }
 
 interface IWeatherProviderProps {
@@ -36,6 +39,7 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
   const [location, setLocation] = useState<LocationDetails>(
     initialLocationDetails,
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [weatherIcon, setWeatherIcon] = useState<IWeatherIcon>(() => {
     const data = sessionStorage.getItem("weatherIcon");
@@ -52,6 +56,14 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
 
   const getLocation = (location: LocationDetails) => {
     setLocation(location);
+  };
+
+  const refreshWeatherData = async (location: LocationDetails) => {
+    setIsLoading(true);
+    if (location.lat !== "" && location.lon !== "") {
+      const response = await fetchWeatherData(location.lat, location.lon);
+      setWeatherData(response);
+    }
   };
 
   const sendWeatherLocationDataToSessionStorage = (
@@ -93,6 +105,7 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
     const getWeatherData = async () => {
       if (location.lat !== "" && location.lon !== "") {
         const response = await fetchWeatherData(location.lat, location.lon);
+
         setWeatherData(response);
       }
     };
@@ -105,6 +118,9 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
         getLocation,
         weatherIcon,
         weatherLocationData,
+        refreshWeatherData,
+        isLoading,
+        setIsLoading,
       }}>
       {children}
     </WeatherContext.Provider>
