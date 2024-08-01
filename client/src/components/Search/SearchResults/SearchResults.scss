@@ -8,6 +8,10 @@
   color: s.$primaryColor;
   width: 100%;
 
+  @include s.small {
+    border-radius: 8px;
+  }
+
   &:hover {
     background-color: s.$search-bar-color-selected;
   }
@@ -24,6 +28,9 @@
     max-width: 500px;
     padding: 15px 0;
     border-bottom: 1px solid #f0f0f0;
+    @include s.small {
+      max-width: 750px;
+    }
   }
 
   &__last-item {

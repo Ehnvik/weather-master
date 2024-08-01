@@ -87,6 +87,12 @@
     transition: max-height 0.6s ease, visibility 0.6s ease;
     z-index: 3;
 
+    @include s.small {
+      max-width: 1240px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
     &--sun {
       background: s.$search-bar-color-sun;
     }
