@@ -27,10 +27,10 @@ export const GeolocationPrompt = ({
   const handleAnswer = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;
     if (id === "accept") {
-      Cookies.set("geolocationConsent", "accepted", { expires: 7 });
+      Cookies.set("geolocationConsent", "accepted", { expires: 365 });
       getCurrentLocation();
     } else {
-      Cookies.set("geolocationConsent", "declined", { expires: 7 });
+      Cookies.set("geolocationConsent", "declined", { expires: 365 });
     }
 
     onClose();
