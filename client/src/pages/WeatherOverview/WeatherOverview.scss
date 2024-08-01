@@ -71,12 +71,29 @@
   }
 
   &__info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    @include s.small {
+      flex-direction: row;
+      justify-content: space-around;
+      padding-top: 25px;
+    }
+  }
+
+  &__current-weather {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 10px 0;
+
+    @include s.small {
+      width: fit-content;
+      max-width: 500px;
+    }
 
     &__icon {
       max-width: 160px;
@@ -110,6 +127,13 @@
         margin: 0;
       }
     }
+  }
+
+  &__slides {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   &__navigation {
