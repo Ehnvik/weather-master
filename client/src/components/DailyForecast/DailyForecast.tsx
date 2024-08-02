@@ -29,6 +29,10 @@ export const DailyForecast = ({ weatherLocationData }: IDailyForecastProps) => {
         weatherLocationData.weatherData,
       );
 
+      if (i === 0) {
+        day = "Tomorrow";
+      }
+
       const icon = findCorrectWeatherIcon(dailyWeather[i].weather[0].icon);
       const temp = formatDailyWeatherTemp(dailyWeather[i]);
       const condition = dailyWeather[i].weather[0].main;
@@ -46,6 +50,7 @@ export const DailyForecast = ({ weatherLocationData }: IDailyForecastProps) => {
 
   return (
     <div className="daily-forecast">
+      <h3 className="daily-forecast__title">7 Days Forecast</h3>
       {dailyWeatherList.map((daily) => {
         return (
           <div className="daily-forecast__container" key={daily.id}>

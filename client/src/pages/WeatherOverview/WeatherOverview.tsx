@@ -10,6 +10,7 @@ import { HourlyForecastSlider } from "../../components/Slides/HourlyForecastSlid
 import { DailyForecastSlider } from "../../components/Slides/DailyForecastSlider/DailyForecastSlider";
 import { ThreeDots } from "react-loader-spinner";
 import { DailyForecast } from "../../components/DailyForecast/DailyForecast";
+import { HourlyForecast } from "../../components/HourlyForecast/HourlyForecast";
 
 export const WeatherOverview = () => {
   const [activeComponent, setActiveComponent] = useState<string>("hourly");
@@ -94,15 +95,17 @@ export const WeatherOverview = () => {
               {weatherLocationData.location.country}
             </p>
           </div>
-          <img
-            className="weather__current-weather__icon"
-            src={weatherLocationData.icon.src}
-            alt="Weather Icon"
-          />
-          <h2 className="weather__current-weather__temp">
-            {weatherLocationData.formattedUnits.currentTemp}&deg;
-            <span className="weather__current-weather__temp--celsius">C</span>
-          </h2>
+          <div className="weather__icon-temp-container">
+            <img
+              className="weather__current-weather__icon"
+              src={weatherLocationData.icon.src}
+              alt="Weather Icon"
+            />
+            <h2 className="weather__current-weather__temp">
+              {weatherLocationData.formattedUnits.currentTemp}&deg;
+              <span className="weather__current-weather__temp--celsius">C</span>
+            </h2>
+          </div>
           <div className="weather__current-weather__high-low-temp">
             <p>H:{weatherLocationData.formattedUnits.maxTemp}&deg;</p>
             <p>L:{weatherLocationData.formattedUnits.minTemp}&deg;</p>
@@ -110,15 +113,15 @@ export const WeatherOverview = () => {
           <h3 className="weather__description">
             {weatherLocationData.weatherData.current.weather[0].description}
           </h3>
-          {screenWidth <= 768 && (
+          {screenWidth < 1000 && (
             <WeatherDetails weatherLocationData={weatherLocationData} />
           )}
         </div>
-        {screenWidth > 768 && (
+        {screenWidth >= 1000 && (
           <DailyForecast weatherLocationData={weatherLocationData} />
         )}
       </div>
-      {screenWidth <= 768 && (
+      {screenWidth < 1000 && (
         <div className="weather__slides">
           <div className="weather__navigation">
             <button
@@ -156,6 +159,7 @@ export const WeatherOverview = () => {
           {activeComponent === "daily" && <DailyForecastSlider />}
         </div>
       )}
+      {/* {screenWidth >= 1000 && <HourlyForecast />} */}
     </div>
   );
 };
