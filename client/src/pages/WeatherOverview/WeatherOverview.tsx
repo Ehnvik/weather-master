@@ -10,7 +10,7 @@ import { HourlyForecastSlider } from "../../components/Slides/HourlyForecastSlid
 import { DailyForecastSlider } from "../../components/Slides/DailyForecastSlider/DailyForecastSlider";
 import { ThreeDots } from "react-loader-spinner";
 import { DailyForecast } from "../../components/DailyForecast/DailyForecast";
-import { HourlyForecast } from "../../components/HourlyForecast/HourlyForecast";
+import { useScreenWidth } from "../../hooks/useScreenWidth";
 
 export const WeatherOverview = () => {
   const [activeComponent, setActiveComponent] = useState<string>("hourly");
@@ -18,22 +18,9 @@ export const WeatherOverview = () => {
   const { getLocation, weatherLocationData, isLoading, setIsLoading } =
     useWeather();
   const { currentLocation: currentPosition, selectedLocation } = useLocation();
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
+  const { screenWidth } = useScreenWidth();
   const { geolocation } = useCurrentLocation(currentPosition);
   const { id } = useParams();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -121,8 +108,12 @@ export const WeatherOverview = () => {
           <DailyForecast weatherLocationData={weatherLocationData} />
         )}
       </div>
-      {screenWidth < 1000 && (
-        <div className="weather__slides">
+
+      <div className="weather__slides">
+        {screenWidth >= 1000 && (
+          <h3 className="weather__hourly-title">Today at</h3>
+        )}
+        {screenWidth < 1000 && (
           <div className="weather__navigation">
             <button
               className={`weather__button ${
@@ -155,11 +146,10 @@ export const WeatherOverview = () => {
               )}
             </button>
           </div>
-          {activeComponent === "hourly" && <HourlyForecastSlider />}
-          {activeComponent === "daily" && <DailyForecastSlider />}
-        </div>
-      )}
-      {/* {screenWidth >= 1000 && <HourlyForecast />} */}
+        )}
+        {activeComponent === "hourly" && <HourlyForecastSlider />}
+        {activeComponent === "daily" && <DailyForecastSlider />}
+      </div>
     </div>
   );
 };

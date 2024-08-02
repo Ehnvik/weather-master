@@ -7,6 +7,10 @@
   border-radius: 50px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
+  @include s.medium {
+    height: 200px;
+  }
+
   &--sun {
     background: s.$hourly-weather-color-sun;
   }
@@ -18,12 +22,20 @@
   &__time,
   &__temp {
     font-weight: 500;
+    font-size: 14px;
+
+    @include s.medium {
+      font-size: 18px;
+    }
   }
 
   &__time {
     margin: 0;
-    font-size: 14px;
     padding-top: 15px;
+
+    @include s.medium {
+      padding: 30px 0 10px 0;
+    }
   }
 
   &__icon {
@@ -31,15 +43,27 @@
     max-height: 50px;
     padding: 5px 0;
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+
+    @include s.medium {
+      max-width: 75px;
+      max-height: 75px;
+    }
   }
 
   &__temp {
     margin: 0;
-    font-size: 14px;
     padding: 5px 0 15px 0;
+
+    @include s.medium {
+      padding-top: 15px;
+    }
 
     &--celsius {
       font-size: 12px;
+
+      @include s.medium {
+        font-size: 16px;
+      }
     }
   }
 }

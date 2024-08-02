@@ -6,11 +6,14 @@ import "swiper/css/navigation";
 import "./HourlyForecastSlider.scss";
 import { useWeather } from "../../../contexts/WeatherContext";
 import { useEffect, useState } from "react";
-import { formatInTimeZone } from "date-fns-tz";
-import { images } from "../../../modules/images";
-import { IHourlyWeather } from "../../../models/Weather/Interfaces/IHourlyWeather";
 import { HourlyWeather } from "../../../models/Weather/Classes/HourlyWeather";
-import { CustomSwiper } from "../../Slides/CustomSwiper/CustomSwiper";
+import { CustomSwiper } from "../CustomSwiper/CustomSwiper";
+import {
+  convertUnixTime,
+  findCorrectWeatherIcon,
+  formatHourlyWeatherTemp,
+  sliceHourlyWeather,
+} from "../../../utils/hourlyForecastHelper";
 
 export const HourlyForecastSlider = () => {
   const [hourlyWeatherList, setHourlyWeatherList] = useState<HourlyWeather[]>(
@@ -25,7 +28,11 @@ export const HourlyForecastSlider = () => {
     );
 
     for (let i = 0; i < hourlyWeather.length; i++) {
-      const time = convertUnixTime(hourlyWeather[i], i);
+      const time = convertUnixTime(
+        hourlyWeather[i],
+        i,
+        weatherLocationData.weatherData,
+      );
       const icon = findCorrectWeatherIcon(hourlyWeather[i].weather[0].icon);
       const temp = formatHourlyWeatherTemp(hourlyWeather[i]);
       if (icon) {
@@ -37,36 +44,11 @@ export const HourlyForecastSlider = () => {
     setHourlyWeatherList(hourlyWeatherList);
   }, [weatherLocationData]);
 
-  const sliceHourlyWeather = (hourlyWeather: IHourlyWeather[]) => {
-    return hourlyWeather.slice(0, 12);
-  };
-
   const backgroundClass = () => {
     return weatherLocationData.icon.id === "01d" ||
       weatherLocationData.icon.id === "02d"
       ? `hourly-weather--sun`
       : `hourly-weather--clouds`;
-  };
-
-  const convertUnixTime = (hourlyWeather: IHourlyWeather, index: number) => {
-    if (index === 0) {
-      return "Now";
-    } else {
-      const date = new Date(hourlyWeather.dt * 1000);
-      return formatInTimeZone(
-        date,
-        weatherLocationData.weatherData.timezone,
-        "HH:mm",
-      );
-    }
-  };
-
-  const findCorrectWeatherIcon = (icon: string) => {
-    return images.find((image) => image.id === icon);
-  };
-
-  const formatHourlyWeatherTemp = (hourlyWeather: IHourlyWeather) => {
-    return Math.round(hourlyWeather.temp);
   };
 
   const displayHourlyWeatherList = hourlyWeatherList.map((hourlyWeather) => {
