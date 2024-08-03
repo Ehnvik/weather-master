@@ -8,12 +8,17 @@ export const sliceDailyWeather = (dailyWeather: IDailyWeather[]) => {
   return dailyWeather.slice(1, 8);
 };
 
+const getDateFormat = () => {
+  return window.innerWidth < 1000 ? "EEE" : "EEEE";
+};
+
 export const convertUnixTime = (
   dailyWeather: IDailyWeather,
   weatherData: IWeatherResponse,
 ) => {
   const date = new Date(dailyWeather.dt * 1000);
-  return formatInTimeZone(date, weatherData.timezone, "EEE");
+  const formatString = getDateFormat();
+  return formatInTimeZone(date, weatherData.timezone, formatString);
 };
 
 export const findCorrectWeatherIcon = (icon: string) => {

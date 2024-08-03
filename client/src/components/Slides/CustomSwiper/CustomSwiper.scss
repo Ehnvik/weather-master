@@ -4,10 +4,11 @@
   position: relative;
   width: 100%;
   max-width: 700px;
-  padding-bottom: 50px;
+  padding-bottom: 15px;
 
   @include s.medium {
     max-width: 900px;
+    padding-bottom: 5px;
   }
 }
 

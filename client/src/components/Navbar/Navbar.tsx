@@ -24,11 +24,16 @@ export const Navbar = () => {
   const handleRefreshWeatherButton = () => {
     if (id) {
       if (selectedLocation.id.toString() === id) {
+        console.log("Refresh with id");
+
         refreshWeatherData(selectedLocation);
       }
     } else {
+      console.log("Refresh geolocation");
       getCurrentLocation();
     }
+
+    console.log("Refresh without working");
   };
 
   const searchContainerRef = useRef<HTMLDivElement>(null);

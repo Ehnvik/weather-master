@@ -44,10 +44,6 @@ export const DailyForecast = ({ weatherLocationData }: IDailyForecastProps) => {
     setHourlyWeatherList(dailyWeatherList);
   }, [weatherLocationData]);
 
-  useEffect(() => {
-    console.log("Daily Forecast: ", dailyWeatherList);
-  }, [dailyWeatherList]);
-
   return (
     <div className="daily-forecast">
       <h3 className="daily-forecast__title">7 Days Forecast</h3>

@@ -87,7 +87,6 @@ export const WeatherProvider = ({ children }: IWeatherProviderProps) => {
         formattedUnits,
         weatherIcon,
       );
-      console.log(weatherData);
 
       setWeatherLocationData(weatherLocationData);
       sendWeatherLocationDataToSessionStorage(weatherLocationData);

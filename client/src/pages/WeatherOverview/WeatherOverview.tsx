@@ -41,6 +41,12 @@ export const WeatherOverview = () => {
     return () => clearTimeout(timer);
   }, [weatherLocationData]);
 
+  useEffect(() => {
+    if (screenWidth >= 1000) {
+      setActiveComponent("hourly");
+    }
+  }, [screenWidth]);
+
   const handleHourlyButtonClick = () => {
     setActiveComponent("hourly");
   };
@@ -100,55 +106,56 @@ export const WeatherOverview = () => {
           <h3 className="weather__description">
             {weatherLocationData.weatherData.current.weather[0].description}
           </h3>
-          {screenWidth < 1000 && (
-            <WeatherDetails weatherLocationData={weatherLocationData} />
-          )}
         </div>
+
+        <WeatherDetails weatherLocationData={weatherLocationData} />
+      </div>
+
+      <div className="weather__daily-hourly-container">
         {screenWidth >= 1000 && (
           <DailyForecast weatherLocationData={weatherLocationData} />
         )}
-      </div>
-
-      <div className="weather__slides">
-        {screenWidth >= 1000 && (
-          <h3 className="weather__hourly-title">Today at</h3>
-        )}
-        {screenWidth < 1000 && (
-          <div className="weather__navigation">
-            <button
-              className={`weather__button ${
-                activeComponent === "hourly" ? "active" : ""
-              }`}
-              onClick={handleHourlyButtonClick}>
-              {activeComponent !== "hourly" && (
-                <span>
-                  <FontAwesomeIcon
-                    className="weather__angle-left-icon"
-                    icon={"angle-left"}
-                  />
-                </span>
-              )}
-              Hourly
-            </button>
-            <button
-              className={`weather__button ${
-                activeComponent === "daily" ? "active" : ""
-              }`}
-              onClick={handleSevenDaysButtonClick}>
-              7-days
-              {activeComponent !== "daily" && (
-                <span>
-                  <FontAwesomeIcon
-                    className="weather__angle-right-icon"
-                    icon={"angle-right"}
-                  />
-                </span>
-              )}
-            </button>
-          </div>
-        )}
-        {activeComponent === "hourly" && <HourlyForecastSlider />}
-        {activeComponent === "daily" && <DailyForecastSlider />}
+        <div className="weather__slides">
+          {screenWidth >= 1000 && (
+            <h3 className="weather__hourly-title">Today at</h3>
+          )}
+          {screenWidth < 1000 && (
+            <div className="weather__navigation">
+              <button
+                className={`weather__button ${
+                  activeComponent === "hourly" ? "active" : ""
+                }`}
+                onClick={handleHourlyButtonClick}>
+                {activeComponent !== "hourly" && (
+                  <span>
+                    <FontAwesomeIcon
+                      className="weather__angle-left-icon"
+                      icon={"angle-left"}
+                    />
+                  </span>
+                )}
+                Hourly
+              </button>
+              <button
+                className={`weather__button ${
+                  activeComponent === "daily" ? "active" : ""
+                }`}
+                onClick={handleSevenDaysButtonClick}>
+                7-days
+                {activeComponent !== "daily" && (
+                  <span>
+                    <FontAwesomeIcon
+                      className="weather__angle-right-icon"
+                      icon={"angle-right"}
+                    />
+                  </span>
+                )}
+              </button>
+            </div>
+          )}
+          {activeComponent === "hourly" && <HourlyForecastSlider />}
+          {activeComponent === "daily" && <DailyForecastSlider />}
+        </div>
       </div>
     </div>
   );
