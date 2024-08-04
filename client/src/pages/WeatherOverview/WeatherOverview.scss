@@ -21,7 +21,7 @@
 
   @include s.medium {
     padding: 15px;
-    gap: 25px;
+    gap: 10px;
   }
 
   &__city-container {
@@ -94,6 +94,7 @@
     @include s.medium {
       flex-direction: row;
       justify-content: space-between;
+      align-items: flex-start;
     }
 
     @include s.large {
@@ -112,6 +113,7 @@
     @include s.medium {
       width: 400px;
       justify-content: center;
+      margin: 0;
     }
 
     &__icon {
