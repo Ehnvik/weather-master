@@ -19,6 +19,11 @@
   justify-content: flex-start;
   animation: fade-in 2s;
 
+  @include s.medium {
+    padding: 15px 15px 0 15px;
+    gap: 10px;
+  }
+
   &__city-container {
     display: flex;
     flex-direction: row;
@@ -70,13 +75,46 @@
     font-weight: 300;
   }
 
+  &__icon-temp-container {
+    @include s.medium {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 15px;
+      margin: 15px 0;
+    }
+  }
+
   &__info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include s.medium {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    @include s.large {
+      justify-content: space-around;
+    }
+  }
+
+  &__current-weather {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 10px 0;
+
+    @include s.medium {
+      width: 400px;
+      justify-content: center;
+      margin: 0;
+    }
 
     &__icon {
       max-width: 160px;
@@ -86,6 +124,12 @@
 
       @include s.mobile {
         filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+      }
+
+      @include s.medium {
+        max-width: 80px;
+        max-height: 80px;
+        margin: 0;
       }
     }
 
@@ -110,6 +154,46 @@
         margin: 0;
       }
     }
+  }
+
+  &__daily-hourly-container {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    padding-bottom: 15px;
+
+    @include s.large {
+      justify-content: space-around;
+    }
+  }
+
+  &__slides {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @include s.medium {
+      overflow: hidden;
+      max-width: 600px;
+    }
+
+    @include s.large {
+      max-width: 650px;
+    }
+  }
+
+  &__hourly-title {
+    width: 350px;
+    padding: 10px;
+    background-color: rgba(250, 250, 250, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 35px;
   }
 
   &__navigation {

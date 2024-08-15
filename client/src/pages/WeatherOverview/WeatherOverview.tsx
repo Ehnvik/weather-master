@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { HourlyForecastSlider } from "../../components/Slides/HourlyForecastSlider/HourlyForecastSlider";
 import { DailyForecastSlider } from "../../components/Slides/DailyForecastSlider/DailyForecastSlider";
 import { ThreeDots } from "react-loader-spinner";
+import { DailyForecast } from "../../components/DailyForecast/DailyForecast";
+import { useScreenWidth } from "../../hooks/useScreenWidth";
 
 export const WeatherOverview = () => {
   const [activeComponent, setActiveComponent] = useState<string>("hourly");
@@ -16,7 +18,7 @@ export const WeatherOverview = () => {
   const { getLocation, weatherLocationData, isLoading, setIsLoading } =
     useWeather();
   const { currentLocation: currentPosition, selectedLocation } = useLocation();
-
+  const { screenWidth } = useScreenWidth();
   const { geolocation } = useCurrentLocation(currentPosition);
   const { id } = useParams();
 
@@ -39,6 +41,12 @@ export const WeatherOverview = () => {
     return () => clearTimeout(timer);
   }, [weatherLocationData]);
 
+  useEffect(() => {
+    if (screenWidth >= 1000) {
+      setActiveComponent("hourly");
+    }
+  }, [screenWidth]);
+
   const handleHourlyButtonClick = () => {
     setActiveComponent("hourly");
   };
@@ -60,75 +68,95 @@ export const WeatherOverview = () => {
   ) : (
     <div className="weather">
       <div className="weather__info">
-        <div className="weather__city-container">
-          <FontAwesomeIcon
-            className="weather__city-icon"
-            icon={"location-dot"}
-          />
-          <h1 className="weather__city">{weatherLocationData.location.city}</h1>
-        </div>
-        <div className="weather__details">
-          {weatherLocationData.location.region && (
-            <p className="weather__region">
-              {weatherLocationData.location.region}
+        <div className="weather__current-weather">
+          <div className="weather__city-container">
+            <FontAwesomeIcon
+              className="weather__city-icon"
+              icon={"location-dot"}
+            />
+            <h1 className="weather__city">
+              {weatherLocationData.location.city}
+            </h1>
+          </div>
+          <div className="weather__details">
+            {weatherLocationData.location.region && (
+              <p className="weather__region">
+                {weatherLocationData.location.region}
+              </p>
+            )}
+            <p className="weather__country">
+              {weatherLocationData.location.country}
             </p>
-          )}
-          <p className="weather__country">
-            {weatherLocationData.location.country}
-          </p>
+          </div>
+          <div className="weather__icon-temp-container">
+            <img
+              className="weather__current-weather__icon"
+              src={weatherLocationData.icon.src}
+              alt="Weather Icon"
+            />
+            <h2 className="weather__current-weather__temp">
+              {weatherLocationData.formattedUnits.currentTemp}&deg;
+              <span className="weather__current-weather__temp--celsius">C</span>
+            </h2>
+          </div>
+          <div className="weather__current-weather__high-low-temp">
+            <p>H:{weatherLocationData.formattedUnits.maxTemp}&deg;</p>
+            <p>L:{weatherLocationData.formattedUnits.minTemp}&deg;</p>
+          </div>
+          <h3 className="weather__description">
+            {weatherLocationData.weatherData.current.weather[0].description}
+          </h3>
         </div>
-        <img
-          className="weather__info__icon"
-          src={weatherLocationData.icon.src}
-          alt="Weather Icon"
-        />
-        <h2 className="weather__info__temp">
-          {weatherLocationData.formattedUnits.currentTemp}&deg;
-          <span className="weather__info__temp--celsius">C</span>
-        </h2>
-        <div className="weather__info__high-low-temp">
-          <p>H:{weatherLocationData.formattedUnits.maxTemp}&deg;</p>
-          <p>L:{weatherLocationData.formattedUnits.minTemp}&deg;</p>
-        </div>
-        <h3 className="weather__description">
-          {weatherLocationData.weatherData.current.weather[0].description}
-        </h3>
+
         <WeatherDetails weatherLocationData={weatherLocationData} />
       </div>
-      <div className="weather__navigation">
-        <button
-          className={`weather__button ${
-            activeComponent === "hourly" ? "active" : ""
-          }`}
-          onClick={handleHourlyButtonClick}>
-          {activeComponent !== "hourly" && (
-            <span>
-              <FontAwesomeIcon
-                className="weather__angle-left-icon"
-                icon={"angle-left"}
-              />
-            </span>
+
+      <div className="weather__daily-hourly-container">
+        {screenWidth >= 1000 && (
+          <DailyForecast weatherLocationData={weatherLocationData} />
+        )}
+        <div className="weather__slides">
+          {screenWidth >= 1000 && (
+            <h3 className="weather__hourly-title">Today at</h3>
           )}
-          Hourly
-        </button>
-        <button
-          className={`weather__button ${
-            activeComponent === "daily" ? "active" : ""
-          }`}
-          onClick={handleSevenDaysButtonClick}>
-          7-days
-          {activeComponent !== "daily" && (
-            <span>
-              <FontAwesomeIcon
-                className="weather__angle-right-icon"
-                icon={"angle-right"}
-              />
-            </span>
+          {screenWidth < 1000 && (
+            <div className="weather__navigation">
+              <button
+                className={`weather__button ${
+                  activeComponent === "hourly" ? "active" : ""
+                }`}
+                onClick={handleHourlyButtonClick}>
+                {activeComponent !== "hourly" && (
+                  <span>
+                    <FontAwesomeIcon
+                      className="weather__angle-left-icon"
+                      icon={"angle-left"}
+                    />
+                  </span>
+                )}
+                Hourly
+              </button>
+              <button
+                className={`weather__button ${
+                  activeComponent === "daily" ? "active" : ""
+                }`}
+                onClick={handleSevenDaysButtonClick}>
+                7-days
+                {activeComponent !== "daily" && (
+                  <span>
+                    <FontAwesomeIcon
+                      className="weather__angle-right-icon"
+                      icon={"angle-right"}
+                    />
+                  </span>
+                )}
+              </button>
+            </div>
           )}
-        </button>
+          {activeComponent === "hourly" && <HourlyForecastSlider />}
+          {activeComponent === "daily" && <DailyForecastSlider />}
+        </div>
       </div>
-      {activeComponent === "hourly" && <HourlyForecastSlider />}
-      {activeComponent === "daily" && <DailyForecastSlider />}
     </div>
   );
 };

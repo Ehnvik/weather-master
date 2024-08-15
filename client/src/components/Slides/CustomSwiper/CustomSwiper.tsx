@@ -13,6 +13,7 @@ import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { useScreenWidth } from "../../../hooks/useScreenWidth";
 
 interface ISwiperProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ interface ISwiperProps {
 export const CustomSwiper = ({ children }: ISwiperProps) => {
   const swiperRef = useRef<SwiperCore | null>(null);
   const location = useLocation();
+  const { screenWidth } = useScreenWidth();
 
   useEffect(() => {
     const resetSwiper = () => {
@@ -40,7 +42,7 @@ export const CustomSwiper = ({ children }: ISwiperProps) => {
         centeredSlides={true}
         loop={false}
         slidesPerView={"auto"}
-        spaceBetween={20}
+        spaceBetween={screenWidth < 1000 ? 20 : 30}
         coverflowEffect={{
           rotate: 0,
           stretch: 0,

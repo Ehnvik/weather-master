@@ -7,6 +7,10 @@ body {
   font-family: s.$primaryFont;
   background-image: s.$primaryBgColor;
   overflow: hidden;
+
+  @include s.medium {
+    height: unset;
+  }
 }
 
 * {
@@ -16,6 +20,10 @@ body {
 #root {
   height: 100%;
   overflow: hidden;
+
+  @include s.medium {
+    height: unset;
+  }
 }
 
 .background {
@@ -24,9 +32,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   overflow: hidden;
+
+  @include s.medium {
+    height: unset;
+  }
 
   &--sun {
     @include s.weather-background(s.$background-color-sun);
@@ -52,11 +64,8 @@ body {
   color: s.$primaryColor;
   z-index: 100;
   overflow: auto;
-  // background-image: s.$primaryBgColor;
-  // background-image: linear-gradient(to right, #141e30, #243b55); // Dark Theme background color
 
-  // @include s.large {
-  //   box-shadow: 1px 0px 20px rgba(151, 149, 149, 0.8),
-  //     0px 10px 5px rgba(151, 149, 149, 0.1);
-  // }
+  @include s.medium {
+    height: 100vh;
+  }
 }

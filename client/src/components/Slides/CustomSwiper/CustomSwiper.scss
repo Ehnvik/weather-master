@@ -4,13 +4,29 @@
   position: relative;
   width: 100%;
   max-width: 700px;
-  padding-bottom: 50px;
+  padding-bottom: 15px;
+
+  @include s.medium {
+    max-width: 900px;
+    padding-bottom: 5px;
+  }
+}
+
+.swiper-wrapper {
+  @include s.medium {
+    min-height: 230px;
+  }
 }
 
 .swiper-slide {
   max-width: 60px;
   max-height: 120px;
   margin-bottom: 20px;
+
+  @include s.medium {
+    max-width: 100px;
+    height: 250px;
+  }
 }
 
 .arrow-container {
@@ -22,6 +38,7 @@
 
 .swiper-pagination {
   position: unset;
+  z-index: 1;
 }
 
 .swiper-pagination-bullets.swiper-pagination-horizontal {

@@ -7,5 +7,6 @@ export class DailyWeather {
     public day: string,
     public icon: IWeatherIcon,
     public temp: IHighLowTemp,
+    public condition?: string,
   ) {}
 }
