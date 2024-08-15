@@ -13,8 +13,18 @@
     flex-direction: column;
     gap: 15px;
     border-radius: 18px;
-    padding: 30px 15px;
+    padding: 20px 15px 30px 15px;
     margin-top: 0;
+  }
+
+  &__weather-summary {
+    margin: 0;
+    text-align: center;
+    background-color: rgba(0, 43, 92, 0.1);
+    padding: 15px;
+    border-radius: 18px;
+    max-width: 570px;
+    margin-bottom: 15px;
   }
 
   &__items-container {
@@ -23,7 +33,7 @@
 
     @include s.medium {
       &--second {
-        margin: 20px 0;
+        margin-top: 20px;
       }
     }
   }
